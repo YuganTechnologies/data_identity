@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Email - Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS code below -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Koulen&family=Lato&family=Nunito&family=Playfair+Display:ital@1&family=Prata&family=Raleway:ital,wght@1,100&family=Roboto&family=Roboto+Condensed&family=Teko&display=swap');
+
+        .btn {
+            font-family: Roboto, sans-serif;
+            font-weight: 0;
+            font-size: 14px;
+            color: #fff;
+            background-color: #d11c5c;
+            padding: 10px 20px; /* Adjusted width */
+            border: none;
+            box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+            border-radius: 50px;
+            transition: 945ms;
+            transform: translateY(0);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline */
+        }
+
+        .btn:hover {
+            transition: 945ms;
+            padding: 10px 28px; /* Adjusted width on hover */
+            transform: translateY(-0px);
+            background-color: #52c76b;
+            color: #ffffff;
+            border: none;
+        }
+    </style>
+
+</head>
+
+<body style="margin: 0px;">
+
+    <div style="font-family: arial, sans-serif; margin: 0; padding: 0; width: 100%; height: 100%;">
+        <table border="0" cellspacing="0" cellpadding="0" align="center"
+            style="max-width: 650px; width: 100%; height: 100%; margin: 0 auto; padding: 0;">
+            <tbody>
+               
+                <tr>
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center"
+                            style="margin: 0 auto; padding: 0;">
+                            <tbody>
+                                <tr>
+                                    <td align="center" valign="top" style="margin: 0 auto; padding: 0; line-height: 1px;">
+                                        <div style="max-width: 568px; padding: 0; margin: 0; line-height: 1px;">
+                                            <h2> Pregtrack - One Time Password</h2>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <div
+                                            style="max-width: 568px; padding: 0; margin: 0; background-size: 100% 100%">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                                align="center" style="padding: 0 45px; box-sizing: border-box; margin: 0 auto">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="padding-top: 33px; padding-bottom: 8px; box-sizing: border-box; margin: 0">
+                                                            <h2 style="font-size: 20px; color: #333333; text-align: left; margin: 0 auto; padding: 0">
+                                                                <span style="color: #FF4D4A">Hi!</span></h2>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="box-sizing: border-box; padding-bottom: 15px; margin: 0">
+                                                            <p style="font-size: 20px; line-height: 30px; color: #354052;">
+                                                               Please use the below OTP for resetting password in Pregtrack.
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="box-sizing: border-box; padding-bottom: 17px; margin: 0">
+                                                            <p style="font-size:50px; color: #354052;">
+                                                                <div style="text-align: center; font-size:50px; margin: 0 15%;">
+                                                                  
+                                                                        <strong><%= otp %></strong>
+                                                                
+                                                                </div>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="margin: 0 auto; padding: 0;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center"
+                            style="padding: 0 45px; box-sizing: border-box; margin: 0 auto;">
+                            <tbody>
+                                <tr>
+                                    <td align='center' style="margin: 0; padding-bottom: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center"
+                                            style="margin: 0 auto; padding: 0;">
+                                            <tbody>
+                                                <tr>
+                                                    <td align='center'
+                                                        style="box-sizing: border-box; padding: 10px 0; color: #333333; font-size: 16px; line-height: 24px; margin: 0 auto">
+                                                        <p style="font-size: 10px; line-height: 30px; color: #354052">
+                                                            </a>Please contact the support team, If OTP is not generated by you
+                                                          </br> 
+                                                           
+                                                        </p>
+                                                        <p>
+                                                          Team-PregTrack, <br>
+                                                         Aakam360.
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" align="center" style="margin: 0 auto; padding: 0">
+                        <div
+                            style="background: url(https://cshprod.s3.amazonaws.com/imageLibrary/bg-bottom_17f75b9617fe.png) no-repeat center center; max-width: 568px; height: 40px; margin: 0 auto; padding: 0; background-size: 100% 100%">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
