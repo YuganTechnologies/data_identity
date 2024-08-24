@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import UsersModel from "../Model/Sequelize/Users";
 import StudentModel from "../Model/Sequelize/Students";
-
+import UploadstudentsModel from "../Model/Sequelize/Uploadstudents";
 import { genPassword, validPassword, getCurrentUser } from "../Utils/auth";
 import { issueJWT } from "../Utils/token";
 
@@ -234,12 +234,12 @@ const exports = {
 
   getstudent: async (req, res) => {
     try {
-      const user = await StudentModel.findOne({
+      const user = await UploadstudentsModel.findOne({
         where: { studentId: req.body.studentid },
       });
 
       if (!user) {
-        return res.status(400).json({ success: false, msg: "User not found" });
+        return res.status(400).json({ success: false, msg: "Student not found" });
       }
 
       res.status(200).json({
@@ -260,7 +260,7 @@ const exports = {
         .status(500)
         .json({
           success: false,
-          message: "Error occurred while checking the username",
+          message: "Error occurred while checking the Student ID",
           error: err,
         });
     }

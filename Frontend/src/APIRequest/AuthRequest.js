@@ -22,10 +22,10 @@ class AuthRequest {
     const data = await RestClient.postRequest("/get-student", postBody);
 
     if (data) {
-      ToastMessage.successMessage("User Fetched Successfull");
+      ToastMessage.successMessage("Student Details Fetched Successfull");
       return data;
     } else {
-      ToastMessage.errorMessage("Invalid User ID");
+      ToastMessage.errorMessage("Invalid Student ID");
     }
   }
 
