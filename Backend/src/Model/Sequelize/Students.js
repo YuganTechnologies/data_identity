@@ -12,6 +12,10 @@ const StudentSchema = {
     type: DataTypes.STRING(100),
     allowNull: true,
   },
+  fullname:{
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
   gender: {
     type: DataTypes.STRING(100),
     allowNull: true,
@@ -74,10 +78,14 @@ const StudentSchema = {
     type: DataTypes.STRING(50),
     allowNull: true,
   },
+  college:{
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
   studentId: {
     type: DataTypes.STRING(50),
     allowNull: true,
-    unique: true,
+
   },
   sevenFiveSCH: {
     type: DataTypes.STRING(100),

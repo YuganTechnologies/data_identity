@@ -186,3 +186,10 @@
 	color: #03b2cb;
 	color: var(--PhoneInputCountrySelectArrow-color--focus);
 }
+
+.sameas-checkbox{
+	font-style: '';
+	font-weight: 300;
+	margin-top: 5px;
+	color: #175b17;
+}

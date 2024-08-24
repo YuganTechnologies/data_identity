@@ -1,18 +1,22 @@
 
 export const fieldDefinitions = [
 
+  [
+    { name: 'studentId', label: 'Enter Student I.D*', type: 'text', optional: false, placeholder: 'Enter Student ID' },
+  ],
   //basic details
   [
     { name: 'firstName', label: 'First Name*', type: 'text', optional: false, placeholder: 'Enter First Name' },
     { name: 'surname', label: 'Surname*', type: 'text', optional: false, placeholder: 'Enter Surname' },
+    { name: 'fullname', label: 'Full Name ( As per Aadhar)*', type: 'text', optional: false, placeholder: 'Enter Full name as per Aadhar' },
     { name: 'gender', label: 'Gender*', type: 'select', options: ['Male', 'Female'], optional: false, placeholder: 'Select Gender' },
     { name: 'dateOfBirth', label: 'Date of Birth*', type: 'date', optional: false, placeholder: 'Select Date of Birth' },
     { name: 'bloodGroup', label: 'Blood Group*', type: 'select', options: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'], optional: false, placeholder: 'Select Blood Group' },
 
-    { name: 'userId', label: 'User ID', type: 'text', optional: true, placeholder: 'Enter User ID' },
+   // { name: 'userId', label: 'User ID', type: 'text', optional: true, placeholder: 'Enter User ID' },
     { name: 'email', label: 'E-Mail Address*', type: 'email', optional: false, placeholder: 'Enter Email Address' },
     { name: 'mobileNumber', label: 'Mobile Number*', type: 'phone', optional: false, placeholder: 'Enter Mobile Number' },
-    { name: 'whatsappanumber', label: 'Whatsapp Number*', type: 'phone', optional: true, placeholder: 'Enter Whatsapp Number' },
+    { name: 'whatsappanumber', label: 'Whatsapp Number*', type: 'phone', optional: true, placeholder: 'Enter Whatsapp Number', sameaslable:'Mobile Number', populate:true, sameas:'mobileNumber' },
     { name: 'address', label: 'Address*', type: 'textarea', optional: false, placeholder: 'Enter Address' },
     { name: 'area', label: 'Street/Area*', type: 'text', optional: false, placeholder: 'Enter Area' },
 
@@ -196,31 +200,68 @@ export const fieldDefinitions = [
         'BCM',
         'DNC'], optional: false, placeholder: 'Enter Religion'
     },
-    { name: 'dept', label: 'Department*', type: 'text', optional: false, placeholder: 'Enter Department' },
-
-
-    { name: '75sch', label: '7.5 SCH', type: 'checkbox', optional: false },
-    { name: 'studentId', label: 'Student I.D*', type: 'text', optional: false, placeholder: 'Enter Student ID' },
-    { name: 'fg', label: 'FG ( First Graduate)', type: 'checkbox', optional: false },
+    { name: 'dept', label: 'Department*', type: 'autocomplete', options:['OTAT',
+'CT',
+' MLT',
+'CPPCT',
+' OPTO',
+'RIT',
+'MLT',
+'OPTO',
+'ECE',
+'AIDS',
+'CSE',
+'BIO MED',
+'MECH',
+'AGRI',
+'IT',
+'CSE/LE',
+'IT/LE',
+'MECH/LE',
+'M.E CSE',
+'AIDS/LE',
+'CYBER SECURITY',
+'ECE/LE',
+'M.E IS',
+'HI',
+'Nursing',
+'B.Pharm/LE',
+'B.Pharm',
+'D.Pharm',
+'Pharm D',
+'M.Pharm',
+'BIO MED/LE',
+'AGRI/LE',
+'CYBER SECURITY/LE'],optional: false, placeholder: 'Enter Department' },
     {
-      name: 'batch', label: 'Batch*', type: 'select', options: ['Batch 2015',
-        'Batch 2016',
-        'Batch 2017',
-        'Batch 2018',
-        'Batch 2019',
-        'Batch 2020',
-        'Batch 2021',
-        'Batch 2022',
-        'Batch 2023',
-        'Batch 2024',
-        'Batch 2025',
-        'Batch 2026',
-        'Batch 2027',
-        'Batch 2028',
-        'Batch 2029',
-        'Batch 2030'], optional: false, placeholder: 'Enter Batch'
+      name: 'batch', label: 'Batch *', type: 'select', options: ['2020-2024',
+'2021-2024',
+'2022-2024',
+'2022-2025',
+'2022-2026',
+'2023-2025',
+'2023-2026',
+'2023-2027',
+'2023-2029',
+'2024-2028',
+'2024-2026',
+'2024-2027'], optional: false, placeholder: 'Enter Batch'
     },
-    { name: 'postmatric', label: 'Post Matric', type: 'checkbox', optional: false },
+    {
+      name: 'college', label: 'College*', type: 'select', options: ['AHS',
+      'ENGINEERING',
+      'HEALTH',
+      'Nursing',
+      'PHARMACY'
+       
+        ], optional: false, placeholder: 'Select College'
+    },
+
+    { name: '75sch', label: '7.5 SCH', type: 'radio', options:['Yes', 'No'], optional: false },
+  
+    { name: 'fg', label: 'FG ( First Graduate)', type: 'radio', options:['Yes', 'No'], optional: false },
+   
+    { name: 'postmatric', label: 'Post Matric', type: 'radio', options:['Yes', 'No'], optional: false },
 
   ],
 
@@ -508,12 +549,12 @@ export const fieldDefinitions = [
     },
 
 
-    { name: 'tenthMark', label: '10th Mark', type: 'text', optional: true, placeholder: 'Enter 10th Mark' },
-    { name: 'twelfthMarkPercent', label: '12th Mark %', type: 'text', optional: true, placeholder: 'Enter 12th Mark %' },
-    { name: 'twelfthMathsMarkOutOf100', label: '12th Maths Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Maths Mark (out of 100)' },
-    { name: 'twelfthPhysicsMarkOutOf100', label: '12th Physics Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Physics Mark (out of 100)' },
-    { name: 'twelfthChemistryMarkOutOf100', label: '12th Chemistry Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Chemistry Mark (out of 100)' },
-    { name: 'twelfthBilologyMarkOutOf100', label: '12th Bilology Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Bilology Mark (out of 100)' },
+    { name: 'tenthMark', label: '10th Mark % *', type: 'text', optional: false, placeholder: 'Enter 10th Mark' },
+    { name: 'twelfthMarkPercent', label: '12th Mark % *', type: 'text', optional: false, placeholder: 'Enter 12th Mark %' },
+    { name: 'twelfthMathsMarkOutOf100', label: '12th Maths Mark (out of 100) *', type: 'text', optional: false, placeholder: 'Enter 12th Maths Mark (out of 100)' },
+    { name: 'twelfthPhysicsMarkOutOf100', label: '12th Physics Mark (out of 100) *', type: 'text', optional: false, placeholder: 'Enter 12th Physics Mark (out of 100)' },
+    { name: 'twelfthChemistryMarkOutOf100', label: '12th Chemistry Mark (out of 100) *', type: 'text', optional: false, placeholder: 'Enter 12th Chemistry Mark (out of 100)' },
+    { name: 'twelfthBilologyMarkOutOf100', label: '12th Bilology Mark (out of 100) ', type: 'text', optional: true, placeholder: 'Enter 12th Bilology Mark (out of 100)' },
     { name: 'twelfthBotanyMarkOutOf100', label: '12th Botany Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Botany Mark (out of 100)' },
     { name: 'twelfthZoologyMarkOutOf100', label: '12th Zoology Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Zoology Mark (out of 100)' },
     { name: 'twelfthCompScienceMarkOutOf100', label: '12th Comp Science Mark (out of 100)', type: 'text', optional: true, placeholder: 'Enter 12th Comp Science Mark (out of 100)' },
@@ -601,7 +642,7 @@ export const fieldDefinitions = [
   //Hostel
   [{ name: 'foodPreference', label: 'Food Preference', type: 'select', options: ['Veg', 'Non Veg', 'Egg'], optional: true, placeholder: 'Select Food Preference' },
 
-  { name: 'hostelstudent', label: 'Hostel Student', type: 'checkbox', optional: true, placeholder: 'Hostel' },
+  { name: 'hostelstudent', label: 'Hostel Student', type: 'radio', options:['Yes', 'No'], optional: false, placeholder: 'Hostel' },
   { name: 'visitorName', label: 'Visitor Name (Other than Father / Mother)', type: 'text', optional: true, placeholder: 'Enter Visitor Name' },
   { name: 'visitorRelation', label: 'Visitor Relation', type: 'text', optional: true, placeholder: 'Enter Visitor Relation' },
   { name: 'visitorAadhar', label: 'Visitor Aadhar', type: 'text', optional: true, placeholder: 'Enter Visitor Aadhar' },
@@ -616,16 +657,18 @@ export const fieldDefinitions = [
 
 
 export const initialFatherValues = [
-  { name: 'fatherId', label: 'Father Id', type: 'text', optional: true, placeholder: 'Enter Father ID' },
+ // { name: 'fatherId', label: 'Father Id', type: 'text', optional: true, placeholder: 'Enter Father ID' },
   { name: 'fatherFirstName', label: 'Father\'s First Name*', type: 'text', optional: false, placeholder: 'Enter Father\'s First Name' },
   { name: 'fatherDateOfBirth', label: 'Father\'s Date of Birth (DD/MM/YYYY)*', type: 'date', optional: false, placeholder: 'Enter Father\'s Date of Birth' },
   { name: 'fatherEmail', label: 'Father\'s E-Mail Address', type: 'text', optional: true, placeholder: 'Enter Father\'s Email Address' },
   { name: 'fatherPrimaryMobileNo', label: 'Father\'s Primary Mobile No*', type: 'phone', optional: false, placeholder: 'Enter Father\'s Primary Mobile No' },
   { name: 'fatherSecondaryMobileNo', label: 'Father\'s Secondary Mobile No', type: 'phone', optional: true, placeholder: 'Enter Father\'s Secondary Mobile No' },
-  { name: 'fatherAddressLine1', label: 'Father\'s Address Line 1*', type: 'textarea', optional: false, placeholder: 'Enter Father\'s Address Line 1' },
-  { name: 'fatherArea', label: 'Father\'s Area*', type: 'text', optional: false, placeholder: 'Enter Father\'s Area' },
-  { name: 'fatherTownVillage', label: 'Father\'s Town/Village*', type: 'text', optional: false, placeholder: 'Enter Father\'s Town/Village' },
-  { name: 'fatherPincode', label: 'Father\'s Pincode*', type: 'text', optional: false, placeholder: 'Enter Father\'s Pincode' },
+  { name: 'fatherAddressLine1', label: 'Father\'s Address Line 1*', type: 'textarea', optional: false, placeholder: 'Enter Father\'s Address Line 1', 
+    
+    sameaslable:'Student Address', populate:true, sameas:'address'  },
+  { name: 'fatherArea', label: 'Father\'s Area*', type: 'text', optional: false, placeholder: 'Enter Father\'s Area' , sameaslable:'Student Area', populate:true, sameas:'area' },
+  { name: 'fatherTownVillage', label: 'Father\'s Town/Village*', type: 'text', optional: false, placeholder: 'Enter Father\'s Town/Village' ,sameaslable:'Student Town/Village', populate:true, sameas:'townVillage' },
+  { name: 'fatherPincode', label: 'Father\'s Pincode*', type: 'text', optional: false, placeholder: 'Enter Father\'s Pincode' , sameaslable:'Student Pincode', populate:true, sameas:'pincode' },
   {
     name: 'fatherProfession', label: 'Father\'s Profession*', type: 'select', options: [
       "Private Employee",
@@ -649,16 +692,16 @@ export const initialFatherValues = [
 ]
 
 export const initialMotherValues = [
-  { name: 'motherId', label: 'Mother Id', type: 'text', optional: true, placeholder: 'Enter Mother ID' },
+ // { name: 'motherId', label: 'Mother Id', type: 'text', optional: true, placeholder: 'Enter Mother ID' },
   { name: 'motherFirstName', label: 'Mother\'s First Name*', type: 'text', optional: false, placeholder: 'Enter Mother\'s First Name' },
   { name: 'motherDateOfBirth', label: 'Mother\'s Date of Birth (DD/MM/YYYY)*', type: 'date', optional: false, placeholder: 'Enter Mother\'s Date of Birth' },
   { name: 'motherEmail', label: 'Mother\'s E-Mail Address', type: 'text', optional: true, placeholder: 'Enter Mother\'s Email Address' },
   { name: 'motherPrimaryMobileNo', label: 'Mother\'s Primary Mobile No*', type: 'phone', optional: false, placeholder: 'Enter Mother\'s Primary Mobile No' },
   { name: 'motherSecondaryMobileNo', label: 'Mother\'s Secondary Mobile No', type: 'phone', optional: true, placeholder: 'Enter Mother\'s Secondary Mobile No' },
-  { name: 'motherAddressLine1', label: 'Mother\'s Address Line 1*', type: 'textarea', optional: false, placeholder: 'Enter Mother\'s Address Line 1' },
-  { name: 'motherArea', label: 'Mother\'s Area*', type: 'text', optional: false, placeholder: 'Enter Mother\'s Area' },
-  { name: 'motherTownVillage', label: 'Mother\'s Town/Village*', type: 'text', optional: false, placeholder: 'Enter Mother\'s Town/Village' },
-  { name: 'motherPincode', label: 'Mother\'s Pincode*', type: 'text', optional: false, placeholder: 'Enter Mother\'s Pincode' },
+  { name: 'motherAddressLine1', label: 'Mother\'s Address Line 1*', type: 'textarea', optional: false, placeholder: 'Enter Mother\'s Address Line 1' ,  sameaslable:'Student Address', populate:true, sameas:'address' },
+  { name: 'motherArea', label: 'Mother\'s Area*', type: 'text', optional: false, placeholder: 'Enter Mother\'s Area' ,sameaslable:'Student Area', populate:true, sameas:'area'},
+  { name: 'motherTownVillage', label: 'Mother\'s Town/Village*', type: 'text', optional: false, placeholder: 'Enter Mother\'s Town/Village' ,sameaslable:'Student Town/Village', populate:true, sameas:'townVillage' },
+  { name: 'motherPincode', label: 'Mother\'s Pincode*', type: 'text', optional: false, placeholder: 'Enter Mother\'s Pincode' ,sameaslable:'Student Pincode', populate:true, sameas:'pincode'},
   {
     name: 'motherProfession', label: 'Mother\'s Profession*', type: 'select', options: [
       "Housewife",
@@ -685,7 +728,7 @@ export const initialMotherValues = [
 ]
 
 export const initialGuardianValues = [
-  { name: 'guardianId', label: 'Guardian Id', type: 'text', optional: true, placeholder: 'Enter Guardian ID' },
+ // { name: 'guardianId', label: 'Guardian Id', type: 'text', optional: true, placeholder: 'Enter Guardian ID' },
   { name: 'guardianFirstName', label: 'Guardian\'s First Name*', type: 'text', optional: false, placeholder: 'Enter Guardian\'s First Name' },
   { name: 'guardianGender', label: 'Guardian\'s Gender*', type: 'select', options: ['Male', 'Female', 'Other'], optional: false, placeholder: 'Select Gender' },
   { name: 'guardianDateOfBirth', label: 'Guardian\'s Date of Birth (DD/MM/YYYY)*', type: 'date', optional: false, placeholder: 'Enter Guardian\'s Date of Birth' },
@@ -718,6 +761,7 @@ export const initialGuardianValues = [
 
 
 export const stepNames = [
+  'Search Details',
   'Basic Details',
   'Personal Details',
   'School Details',
