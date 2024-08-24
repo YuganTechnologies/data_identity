@@ -12,7 +12,7 @@ export const fieldDefinitions = [
     { name: 'gender', label: 'Gender*', type: 'select', options: ['Male', 'Female'], optional: false, placeholder: 'Select Gender' },
     { name: 'dateOfBirth', label: 'Date of Birth*', type: 'date', optional: false, placeholder: 'Select Date of Birth' },
     { name: 'bloodGroup', label: 'Blood Group*', type: 'select', options: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'], optional: false, placeholder: 'Select Blood Group' },
-
+  
    // { name: 'userId', label: 'User ID', type: 'text', optional: true, placeholder: 'Enter User ID' },
     { name: 'email', label: 'E-Mail Address*', type: 'email', optional: false, placeholder: 'Enter Email Address' },
     { name: 'mobileNumber', label: 'Mobile Number*', type: 'phone', optional: false, placeholder: 'Enter Mobile Number' },
@@ -569,7 +569,7 @@ export const fieldDefinitions = [
 
   { name: 'bankDetails', label: 'Bank Details (Aadhar Linked)', type: 'textarea', optional: true, placeholder: 'Enter Bank Details (Aadhar Linked)' },
   {
-    name: 'languagesKnown', label: 'Languages Known', type: 'select', options: [
+    name: 'languagesKnown', label: 'Languages Known', type: 'selectmulti', options: [
       'Hindi',
       'Bengali',
       'Telugu',
@@ -595,7 +595,7 @@ export const fieldDefinitions = [
     , optional: true, placeholder: 'Select Languages Known'
   },
   {
-    name: 'foreignLanguagesKnown', label: 'Foreign Languages Known', type: 'select', options: [
+    name: 'foreignLanguagesKnown', label: 'Foreign Languages Known', type: 'selectmulti', options: [
       'English',
       'Spanish',
       'French',

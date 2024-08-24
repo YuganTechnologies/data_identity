@@ -15,6 +15,7 @@ import {
   Autocomplete,
   Grid,
   Card,
+  MultiSelect,
 } from "@mantine/core";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -70,7 +71,10 @@ const generateValidationSchema = (fields) => {
         .string()
         .email("Invalid email address")
         .required(`${field.label} is required`);
-    } else if (field.type === "text" && field.name === "phoneNumber") {
+    } else if (field.type === "selectmulti") {
+      shape[field.name] = yup
+        .array();
+    }else if (field.type === "text" && field.name === "phoneNumber") {
       shape[field.name] = yup
         .string()
         .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
@@ -98,7 +102,7 @@ const MultiStepForm = () => {
   // Function to dynamically create the validation schema based on the step and selections
   const createValidationSchema = () => {
     let fieldsToValidate = [...fieldDefinitions[active]];
-    if (active === 1) {
+    if (active === 2) {
       if (includeFather)
         fieldsToValidate = [...fieldsToValidate, ...initialFatherValues];
       if (includeMother)
@@ -127,7 +131,6 @@ const MultiStepForm = () => {
       setSubmitLoading(true);
       const resposne = AuthRequest.AddStudent(values);
 
-    
       if (resposne.status === 200) {
         setTimeout(() => {
           window.location.reload();
@@ -183,7 +186,6 @@ const MultiStepForm = () => {
       const response = await AuthRequest.Getstudent(payload);
 
       if (response.status === 200) {
-      
         // Handle successful response
         setSearchloading(false);
         formik.setFieldValue("firstName", response.data.firstName);
@@ -222,7 +224,7 @@ const MultiStepForm = () => {
   const handleNextStep = () => {
     const currentFields = [...fieldDefinitions[active]];
 
-    if (active === 1) {
+    if (active === 2) {
       if (includeFather) currentFields.push(...initialFatherValues);
       if (includeMother) currentFields.push(...initialMotherValues);
       if (includeGuardian) currentFields.push(...initialGuardianValues);
@@ -230,6 +232,7 @@ const MultiStepForm = () => {
 
     formik.validateForm().then((errors) => {
       // Set all current fields as touched
+      console.log(errors)
       formik.setTouched(
         currentFields.reduce(
           (acc, field) => ({
@@ -372,6 +375,13 @@ const MultiStepForm = () => {
               />
             )}
           </div>
+        ) : field.type === "selectmulti" ? (
+          <MultiSelect
+            label={field.label}
+            placeholder={field.placeholder}
+            data={field.options}
+            onChange={(value) => formik.setFieldValue(field.name, value)}
+          />
         ) : field.type === "autocomplete" ? (
           <div>
             <Autocomplete
