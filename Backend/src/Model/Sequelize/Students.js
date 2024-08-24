@@ -277,14 +277,13 @@ const StudentSchema = {
     allowNull: true,
   },
   languagesKnown: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: true,
   },
   foreignLanguagesKnown: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: true,
   },
-
   aadharNo: {
     type: DataTypes.STRING(12),
     allowNull: true,
