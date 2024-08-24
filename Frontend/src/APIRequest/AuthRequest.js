@@ -6,8 +6,6 @@ import store from "../redux/store/store";
 import RestClient from "./RestClient";
 
 class AuthRequest {
-
-
   static async LoginUser(postBody) {
     const data = await RestClient.postRequest("/login", postBody);
 
@@ -19,11 +17,22 @@ class AuthRequest {
       ToastMessage.errorMessage("Invalid Credentials");
     }
   }
+
+  static async Getstudent(postBody) {
+    const data = await RestClient.postRequest("/get-student", postBody);
+
+    if (data) {
+      ToastMessage.successMessage("User Fetched Successfull");
+      return data;
+    } else {
+      ToastMessage.errorMessage("Invalid User ID");
+    }
+  }
+
   static async AddStudent(postBody) {
     const data = await RestClient.postRequest("/create-student", postBody);
 
     if (data) {
-
       ToastMessage.successMessage("Student Added Successfull");
       window.location.reload();
     } else {

@@ -60,7 +60,7 @@ class RestClient {
     return await axios
       .post(url, postBody, axiosHeaders())
       .then((response) => {
-        console.log('api', response)
+
         return ResponseReturn(response);
       })
       .catch((error) => {

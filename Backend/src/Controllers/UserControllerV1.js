@@ -1,18 +1,17 @@
-import { Op } from 'sequelize';
-import UsersModel from '../Model/Sequelize/Users';
-import StudentModel from '../Model/Sequelize/Students';
+import { Op } from "sequelize";
+import UsersModel from "../Model/Sequelize/Users";
+import StudentModel from "../Model/Sequelize/Students";
 
-import { genPassword, validPassword, getCurrentUser } from '../Utils/auth';
-import { issueJWT } from '../Utils/token';
+import { genPassword, validPassword, getCurrentUser } from "../Utils/auth";
+import { issueJWT } from "../Utils/token";
 
-const moment = require('moment');
-const multer = require('multer');
-const { Sequelize } = require('sequelize');
-import { getEnv } from '../Utils/envConfig';
-const otpGenerator = require('otp-generator');
+const moment = require("moment");
+const multer = require("multer");
+const { Sequelize } = require("sequelize");
+import { getEnv } from "../Utils/envConfig";
+const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
-const ejs = require('ejs');
-
+const ejs = require("ejs");
 
 const exports = {
   Register: async (req, res) => {
@@ -24,7 +23,9 @@ const exports = {
       });
 
       if (count > 0) {
-        return res.status(400).json({ success: false, message: 'Mobile  already exists.' });
+        return res
+          .status(400)
+          .json({ success: false, message: "Mobile  already exists." });
       }
 
       const saltHash = genPassword(req.body.password);
@@ -38,64 +39,86 @@ const exports = {
         pwd_salt: passwordSalt,
         pwd_hash: passwordHash,
         is_active: req.body.isActive,
-
       });
 
       if (newUser) {
-        return res.status(201).json({ success: true, message: 'User created successfully.', user: newUser.toJSON() });
+        return res
+          .status(201)
+          .json({
+            success: true,
+            message: "User created successfully.",
+            user: newUser.toJSON(),
+          });
       }
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ success: false, message: 'Error occurred while creating the user.', error: err });
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Error occurred while creating the user.",
+          error: err,
+        });
     }
   },
   userLogin: async (req, res) => {
     try {
-
-
-      const user = await UsersModel.findOne({ where: { username: req.body.UserId } });
-
-
+      const user = await UsersModel.findOne({
+        where: { username: req.body.UserId },
+      });
 
       if (!user) {
-        return res.status(401).json({ success: false, msg: 'User not found' });
+        return res.status(401).json({ success: false, msg: "User not found" });
       }
 
-      const isValid = validPassword(req.body.Password, user.pwd_hash, user.pwd_salt);
+      const isValid = validPassword(
+        req.body.Password,
+        user.pwd_hash,
+        user.pwd_salt
+      );
 
       if (isValid) {
         const tokenObject = issueJWT(user);
         res.status(200).json({
           success: true,
-          UserId: user.username, role: user.role, uid: user.uid,
+          UserId: user.username,
+          role: user.role,
+          uid: user.uid,
 
-          token: tokenObject.token, expiresIn: tokenObject.expires
+          token: tokenObject.token,
+          expiresIn: tokenObject.expires,
         });
       } else {
-        res.status(401).json({ success: false, msg: 'You entered the wrong password' });
+        res
+          .status(401)
+          .json({ success: false, msg: "You entered the wrong password" });
       }
     } catch (err) {
       console.error(err);
-      res.status(500).json({ success: false, message: 'Error occurred while checking the username', error: err });
+      res
+        .status(500)
+        .json({
+          success: false,
+          message: "Error occurred while checking the username",
+          error: err,
+        });
     }
   },
 
   addstudent: async (req, res) => {
     try {
+      const userDetails = req.headers["userdetails"];
 
-      const userDetails = req.headers['userdetails'];
-
-
-      console.log('userDetails', userDetails)
       if (!req.body) {
-        return res.status(400).json({ success: false, message: 'Body is Required' });
+        return res
+          .status(400)
+          .json({ success: false, message: "Body is Required" });
       }
-
-
 
       const newStudent = await StudentModel.create({
         firstName: req.body.firstName || null,
         surname: req.body.surname || null,
+        fullname :  req.body.fullname || null,
         gender: req.body.gender || null,
         dateOfBirth: req.body.dateOfBirth || null,
         bloodGroup: req.body.bloodGroup || null,
@@ -111,6 +134,7 @@ const exports = {
         pincode: req.body.pincode || null,
         religion: req.body.religion || null,
         dept: req.body.dept || null,
+        college :  req.body.college || null,
         sevenFiveSCH: req.body["75sch"] || null,
         studentId: req.body.studentId || null,
         fg: req.body.fg || null,
@@ -123,11 +147,14 @@ const exports = {
         twelfthMarkPercent: req.body.twelfthMarkPercent || null,
         twelfthMathsMarkOutOf100: req.body.twelfthMathsMarkOutOf100 || null,
         twelfthPhysicsMarkOutOf100: req.body.twelfthPhysicsMarkOutOf100 || null,
-        twelfthChemistryMarkOutOf100: req.body.twelfthChemistryMarkOutOf100 || null,
-        twelfthBilologyMarkOutOf100: req.body.twelfthBilologyMarkOutOf100 || null,
+        twelfthChemistryMarkOutOf100:
+          req.body.twelfthChemistryMarkOutOf100 || null,
+        twelfthBilologyMarkOutOf100:
+          req.body.twelfthBilologyMarkOutOf100 || null,
         twelfthBotanyMarkOutOf100: req.body.twelfthBotanyMarkOutOf100 || null,
         twelfthZoologyMarkOutOf100: req.body.twelfthZoologyMarkOutOf100 || null,
-        twelfthCompScienceMarkOutOf100: req.body.twelfthCompScienceMarkOutOf100 || null,
+        twelfthCompScienceMarkOutOf100:
+          req.body.twelfthCompScienceMarkOutOf100 || null,
         aadharNo: req.body.aadharNo || null,
         panCard: req.body.pancard || null,
         passportNumber: req.body.passportNo || null,
@@ -181,31 +208,65 @@ const exports = {
         guardianTownVillage: req.body.guardianTownVillage || null,
         guardianPincode: req.body.guardianPincode || null,
         guardianArea: req.body.guardianArea || null,
-        guardianRelationWithStudent: req.body.guardianRelationWithStudent || null,
+        guardianRelationWithStudent:
+          req.body.guardianRelationWithStudent || null,
         guardianProfession: req.body.guardianProfession || null,
         guardianIncome: req.body.guardianIncome || null,
-        created_by: userDetails || null
-
+        created_by: userDetails || null,
       });
 
       if (newStudent) {
-        return res.status(200).json({ success: true, message: 'Student created successfully.' });
+        return res
+          .status(200)
+          .json({ success: true, message: "Student created successfully." });
       }
-
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ success: false, message: 'Error occurred while creating the student.', error: err });
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Error occurred while creating the student.",
+          error: err,
+        });
     }
   },
 
+  getstudent: async (req, res) => {
+    try {
+      const user = await StudentModel.findOne({
+        where: { studentId: req.body.studentid },
+      });
 
+      if (!user) {
+        return res.status(400).json({ success: false, msg: "User not found" });
+      }
 
+      res.status(200).json({
+        success: true,
+        studentId: user.studentId,
+        firstName: user.firstName,
+        surname: user.surname,
+        gender: user.gender,
+        dept: user.dept,
+        batch: user.batch,
+        college:user.college,
+
+       
+      });
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .json({
+          success: false,
+          message: "Error occurred while checking the username",
+          error: err,
+        });
+    }
+  },
 };
 
-
 // Controller function for adding a new report with file upload
-
-
-
 
 module.exports = exports;
