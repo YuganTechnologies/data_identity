@@ -26,7 +26,7 @@ import {
   initialMotherValues,
   initialGuardianValues,
 } from "./fieldDefinitions";
-
+import Swal from "sweetalert2";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 import "./style.css"; // Ensure this import matches the path to your CSS file
@@ -72,9 +72,8 @@ const generateValidationSchema = (fields) => {
         .email("Invalid email address")
         .required(`${field.label} is required`);
     } else if (field.type === "selectmulti") {
-      shape[field.name] = yup
-        .array();
-    }else if (field.type === "text" && field.name === "phoneNumber") {
+      shape[field.name] = yup.array();
+    } else if (field.type === "text" && field.name === "phoneNumber") {
       shape[field.name] = yup
         .string()
         .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
@@ -119,7 +118,11 @@ const MultiStepForm = () => {
         (acc, field) => ({
           ...acc,
           [field.name]:
-            field.type === "checkbox" || field.type === "switch" ? false : "",
+            field.type === "checkbox" || field.type === "switch"
+              ? false
+              : field.type === "selectmulti"
+              ? []
+              : "",
         }),
         {}
       ),
@@ -128,14 +131,26 @@ const MultiStepForm = () => {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: (values) => {
-      setSubmitLoading(true);
-      const resposne = AuthRequest.AddStudent(values);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this! Please verify before submit",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Submit it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setSubmitLoading(true);
+          const resposne = AuthRequest.AddStudent(values);
 
-      if (resposne.status === 200) {
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }
+          if (resposne.status === 200) {
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          }
+        }
+      });
     },
   });
 
@@ -232,7 +247,7 @@ const MultiStepForm = () => {
 
     formik.validateForm().then((errors) => {
       // Set all current fields as touched
-      console.log(errors)
+      console.log(errors);
       formik.setTouched(
         currentFields.reduce(
           (acc, field) => ({
@@ -380,6 +395,7 @@ const MultiStepForm = () => {
             label={field.label}
             placeholder={field.placeholder}
             data={field.options}
+            defaultValue={formik.values[field.name]}
             onChange={(value) => formik.setFieldValue(field.name, value)}
           />
         ) : field.type === "autocomplete" ? (
@@ -449,7 +465,7 @@ const MultiStepForm = () => {
       size="xl"
       style={{ width: "100%", marginTop: "50px", padding: "10px" }}
     >
-      <Stepper active={active} breakpoint="sm">
+      <Stepper active={active} breakpoint="sm" size="xs">
         {stepNames.map((name, index) => (
           <Stepper.Step key={index} label={name} />
         ))}

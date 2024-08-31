@@ -25,7 +25,7 @@ class AuthRequest {
       ToastMessage.successMessage("Student Details Fetched Successfull");
       return data;
     } else {
-      ToastMessage.errorMessage("Invalid Student ID");
+     // ToastMessage.errorMessage("Invalid Student ID");
     }
   }
 

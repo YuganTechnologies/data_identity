@@ -1,16 +1,13 @@
-import fs from 'fs';
-import path from 'path';
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import UsersModel from '../Model/Sequelize/Users';
 
-const pathToKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
-const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
+const SECRET_CODE = '3f8d92b6a4$#2c2e1f'; // Replace with your actual secret code
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: PUB_KEY,
-  algorithms: ['RS256'],
+  secretOrKey: SECRET_CODE,
+  algorithms: ['HS256'], // Change the algorithm to HS256
 };
 
 passport.use(

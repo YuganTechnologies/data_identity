@@ -16416,6 +16416,7 @@ body[data-layout-color=dark][data-layout=detached] .leftbar-user .leftbar-user-n
 }
 .nav-user .account-user-name {
   display: block;
+  margin-top: 10px;
   font-weight: 600;
 }
 

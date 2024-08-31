@@ -1,14 +1,12 @@
 import jwt from 'jsonwebtoken';
-import fs from 'fs';
-import path from 'path';
 
-const pathToKey = path.join(__dirname, '..', 'id_rsa_priv.pem');
-const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8');
+const SECRET_CODE = '3f8d92b6a4$#2c2e1f'; // Replace with your actual secret code
 
 function issueJWT(user) {
   const { uid, username, role } = user;
-  const expirationDuration = 60 * 24 * 60 * 60 * 1000;
+  const expirationDuration = 60 * 24 * 60 * 60 * 1000; // 60 days
   const expirationTime = Date.now() + expirationDuration;
+  
   const payload = {
     sub: uid,
     name: username,
@@ -16,11 +14,13 @@ function issueJWT(user) {
     iat: Date.now(),
     exp: expirationTime,
   };
-  const signedToken = jwt.sign(payload, PRIV_KEY, { algorithm: 'RS256' });
+  
+  const signedToken = jwt.sign(payload, SECRET_CODE, { algorithm: 'HS256' });
+  
   return {
     token: 'Bearer ' + signedToken,
+    expires: expirationTime,
   };
 }
-
 
 export { issueJWT };

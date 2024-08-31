@@ -33,11 +33,12 @@ const ErrorReturn = (error) => {
   if (error.response.status === 500) {
     ToastMessage.errorMessage("Sorry, Something went wrong");
   } else if (error.response.status === 401) {
-    ToastMessage.errorMessage(error.response.data.message);
+    ToastMessage.errorMessage(error.response.data.msg);
     store.dispatch(SetLogout());
     store.dispatch(RemoveUserDetails());
   } else {
-    ToastMessage.errorMessage(error.response.data.message);
+   
+    ToastMessage.errorMessage(error.response.data.msg);
   }
 
   return false;
