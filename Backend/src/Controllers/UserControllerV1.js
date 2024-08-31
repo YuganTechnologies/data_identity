@@ -42,23 +42,19 @@ const exports = {
       });
 
       if (newUser) {
-        return res
-          .status(201)
-          .json({
-            success: true,
-            message: "User created successfully.",
-            user: newUser.toJSON(),
-          });
+        return res.status(201).json({
+          success: true,
+          message: "User created successfully.",
+          user: newUser.toJSON(),
+        });
       }
     } catch (err) {
       console.error(err);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Error occurred while creating the user.",
-          error: err,
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while creating the user.",
+        error: err,
+      });
     }
   },
   userLogin: async (req, res) => {
@@ -82,8 +78,8 @@ const exports = {
         res.status(200).json({
           success: true,
           UserId: user.username,
-          role: user.role,
-          uid: user.uid,
+          //role: user.role,
+         // uid: user.uid,
 
           token: tokenObject.token,
           expiresIn: tokenObject.expires,
@@ -95,13 +91,11 @@ const exports = {
       }
     } catch (err) {
       console.error(err);
-      res
-        .status(500)
-        .json({
-          success: false,
-          message: "Error occurred while checking the username",
-          error: err,
-        });
+      res.status(500).json({
+        success: false,
+        message: "Error occurred while checking the username",
+        error: err,
+      });
     }
   },
 
@@ -116,33 +110,76 @@ const exports = {
       }
 
       const newStudent = await StudentModel.create({
+        sevenFiveSCH: req.body["75sch"] || null,
         firstName: req.body.firstName || null,
         surname: req.body.surname || null,
-        fullname :  req.body.fullname || null,
+        fullname: req.body.fullname || null,
         gender: req.body.gender || null,
         dateOfBirth: req.body.dateOfBirth || null,
-        bloodGroup: req.body.bloodGroup || null,
         userId: req.body.userId || null,
         email: req.body.email || null,
-        whatsappNumber: req.body.whatsappanumber || null,
+        mobileNumber: req.body.mobileNumber || null,
         address: req.body.address || null,
         area: req.body.area || null,
+        state: req.body.state || null,
+        district: req.body.district || null,
         talukaCity: req.body.talukaCity || null,
         townVillage: req.body.townVillage || null,
-        district: req.body.district || null,
-        state: req.body.state || null,
         pincode: req.body.pincode || null,
         religion: req.body.religion || null,
         dept: req.body.dept || null,
-        college :  req.body.college || null,
-        sevenFiveSCH: req.body["75sch"] || null,
+        batch: req.body.batch || null,
+        college: req.body.college || null,
         studentId: req.body.studentId || null,
         fg: req.body.fg || null,
-        batch: req.body.batch || null,
-        postMatric: req.body.postmatric || null,
+        postMatric: req.body.postMatric || null,
+        fatherId: req.body.fatherId || null,
+        fatherFirstName: req.body.fatherFirstName || null,
+        fatherDateOfBirth: req.body.fatherDateOfBirth || null,
+        fatherEmail: req.body.fatherEmail || null,
+        fatherPrimaryMobileNo: req.body.fatherPrimaryMobileNo || null,
+        fatherSecondaryMobileNo: req.body.fatherSecondaryMobileNo || null,
+        fatherAddressLine1: req.body.fatherAddressLine1 || null,
+        fatherArea: req.body.fatherArea || null,
+        fatherTownVillage: req.body.fatherTownVillage || null,
+        fatherPincode: req.body.fatherPincode || null,
+        fatherProfession: req.body.fatherProfession || null,
+        fatherIncome: req.body.fatherIncome || null,
+        motherId: req.body.motherId || null,
+        motherFirstName: req.body.motherFirstName || null,
+        motherDateOfBirth: req.body.motherDateOfBirth || null,
+        motherEmail: req.body.motherEmail || null,
+        motherPrimaryMobileNo: req.body.motherPrimaryMobileNo || null,
+        motherSecondaryMobileNo: req.body.motherSecondaryMobileNo || null,
+        motherAddressLine1: req.body.motherAddressLine1 || null,
+        motherArea: req.body.motherArea || null,
+        motherTownVillage: req.body.motherTownVillage || null,
+        motherPincode: req.body.motherPincode || null,
+        motherProfession: req.body.motherProfession || null,
+        motherIncome: req.body.motherIncome || null,
+        guardianId: req.body.guardianId || null,
+        guardianFirstName: req.body.guardianFirstName || null,
+        guardianGender: req.body.guardianGender || null,
+        guardianDateOfBirth: req.body.guardianDateOfBirth || null,
+        guardianEmail: req.body.guardianEmail || null,
+        guardianPrimaryMobileNo: req.body.guardianPrimaryMobileNo || null,
+        guardianSecondaryMobileNo: req.body.guardianSecondaryMobileNo || null,
+        guardianAddressLine1: req.body.guardianAddressLine1 || null,
+        guardianArea: req.body.guardianArea || null,
+        guardianTownVillage: req.body.guardianTownVillage || null,
+        guardianPincode: req.body.guardianPincode || null,
+        guardianRelationWithStudent:
+          req.body.guardianRelationWithStudent || null,
+        guardianProfession: req.body.guardianProfession || null,
+        guardianIncome: req.body.guardianIncome || null,
+        bloodGroup: req.body.bloodGroup || null,
         schoolType: req.body.schoolType || null,
         schoolName: req.body.schoolName || null,
         medium: req.body.medium || null,
+        languagesKnown: req.body.languagesKnown || null,
+        foreignLanguagesKnown: req.body.foreignLanguagesKnown || null,
+        aadharNo: req.body.aadharNo || null,
+        emisNo: req.body.emisNo || null,
         tenthMark: req.body.tenthMark || null,
         twelfthMarkPercent: req.body.twelfthMarkPercent || null,
         twelfthMathsMarkOutOf100: req.body.twelfthMathsMarkOutOf100 || null,
@@ -155,15 +192,11 @@ const exports = {
         twelfthZoologyMarkOutOf100: req.body.twelfthZoologyMarkOutOf100 || null,
         twelfthCompScienceMarkOutOf100:
           req.body.twelfthCompScienceMarkOutOf100 || null,
-        aadharNo: req.body.aadharNo || null,
-        panCard: req.body.pancard || null,
-        passportNumber: req.body.passportNo || null,
-        emisNo: req.body.emisNo || null,
-        bankDetails: req.body.bankDetails || null,
-        languagesKnown: req.body.languagesKnown || null,
-        foreignLanguagesKnown: req.body.foreignLanguagesKnown || null,
-        foodPreference: req.body.foodPreference || null,
-        hostelStudent: req.body.hostelstudent || null,
+        community: req.body.community || null,
+        panCard: req.body.panCard || null,
+        passportNumber: req.body.passportNumber || null,
+        hostelStudent: req.body.hostelStudent || null,
+        whatsappNumber: req.body.whatsappNumber || null,
         visitorName: req.body.visitorName || null,
         visitorRelation: req.body.visitorRelation || null,
         visitorAadhar: req.body.visitorAadhar || null,
@@ -171,47 +204,26 @@ const exports = {
         visitorPhone: req.body.visitorPhone || null,
         visitorDOB: req.body.visitorDOB || null,
         visitorAddress: req.body.visitorAddress || null,
-        mobileNumber: req.body.mobileNumber || null,
-        community: req.body.community || null,
-        fatherId: req.body.fatherId || null,
-        fatherFirstName: req.body.fatherFirstName || null,
-        fatherEmail: req.body.fatherEmail || null,
-        fatherDateOfBirth: req.body.fatherDateOfBirth || null,
-        fatherPrimaryMobileNo: req.body.fatherPrimaryMobileNo || null,
-        fatherSecondaryMobileNo: req.body.fatherSecondaryMobileNo || null,
-        fatherAddressLine1: req.body.fatherAddressLine1 || null,
-        fatherTownVillage: req.body.fatherTownVillage || null,
-        fatherPincode: req.body.fatherPincode || null,
-        fatherArea: req.body.fatherArea || null,
-        fatherIncome: req.body.fatherIncome || null,
-        fatherProfession: req.body.fatherProfession || null,
-        motherId: req.body.motherId || null,
-        motherFirstName: req.body.motherFirstName || null,
-        motherEmail: req.body.motherEmail || null,
-        motherDateOfBirth: req.body.motherDateOfBirth || null,
-        motherPrimaryMobileNo: req.body.motherPrimaryMobileNo || null,
-        motherSecondaryMobileNo: req.body.motherSecondaryMobileNo || null,
-        motherAddressLine1: req.body.motherAddressLine1 || null,
-        motherTownVillage: req.body.motherTownVillage || null,
-        motherPincode: req.body.motherPincode || null,
-        motherArea: req.body.motherArea || null,
-        motherIncome: req.body.motherIncome || null,
-        motherProfession: req.body.motherProfession || null,
-        guardianId: req.body.guardianId || null,
-        guardianFirstName: req.body.guardianFirstName || null,
-        guardianDateOfBirth: req.body.guardianDateOfBirth || null,
-        guardianGender: req.body.guardianGender || null,
-        guardianEmail: req.body.guardianEmail || null,
-        guardianPrimaryMobileNo: req.body.guardianPrimaryMobileNo || null,
-        guardianSecondaryMobileNo: req.body.guardianSecondaryMobileNo || null,
-        guardianAddressLine1: req.body.guardianAddressLine1 || null,
-        guardianTownVillage: req.body.guardianTownVillage || null,
-        guardianPincode: req.body.guardianPincode || null,
-        guardianArea: req.body.guardianArea || null,
-        guardianRelationWithStudent:
-          req.body.guardianRelationWithStudent || null,
-        guardianProfession: req.body.guardianProfession || null,
-        guardianIncome: req.body.guardianIncome || null,
+        foodPreference: req.body.foodPreference || null,
+        bankDetails: req.body.bankDetails || null,
+        drivinglicense: req.body.drivinglicense || null,
+        registernumber: req.body.registernumber || null,
+        internship: req.body.internship || null,
+        placement: req.body.placement || null,
+        paidtraining: req.body.paidtraining || null,
+        gvtjobtraining: req.body.gvtjobtraining || null,
+        interestedtraining: req.body.interestedtraining || null,
+        hoursoftraining: req.body.hoursoftraining || null,
+        expectedsalary: req.body.expectedsalary || null,
+        preferedlocation: req.body.preferedlocation || null,
+        currentintern: req.body.currentintern || null,
+        currenttraining: req.body.currenttraining || null,
+        latestcgpa: req.body.latestcgpa || null,
+        noofstandingarrears: req.body.noofstandingarrears || null,
+        parttimejob: req.body.parttimejob || null,
+        primaryskills: req.body.primaryskills || null,
+        secondaryskills: req.body.secondaryskills || null,
+        noplacemnetreason: req.body.noplacemnetreason || null,
         created_by: userDetails || null,
       });
 
@@ -222,13 +234,11 @@ const exports = {
       }
     } catch (err) {
       console.error(err);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Error occurred while creating the student.",
-          error: err,
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while creating the student.",
+        error: err,
+      });
     }
   },
 
@@ -239,9 +249,20 @@ const exports = {
       });
 
       if (!user) {
-        return res.status(400).json({ success: false, msg: "Student not found" });
+        return res
+          .status(400)
+          .json({ success: false, msg: "Student ID not found" });
       }
 
+      const alreadysubmiteduser = await StudentModel.findOne({
+        where: { studentId: req.body.studentid },
+      });
+
+      if(alreadysubmiteduser){
+        return res
+        .status(400)
+        .json({ success: false, msg: "Student Details are already submitted! Please contact admin for changes" });
+      }
       res.status(200).json({
         success: true,
         studentId: user.studentId,
@@ -250,19 +271,15 @@ const exports = {
         gender: user.gender,
         dept: user.dept,
         batch: user.batch,
-        college:user.college,
-
-       
+        college: user.college,
       });
     } catch (err) {
       console.error(err);
-      res
-        .status(500)
-        .json({
-          success: false,
-          message: "Error occurred while checking the Student ID",
-          error: err,
-        });
+      res.status(500).json({
+        success: false,
+        message: "Error occurred while checking the Student ID",
+        error: err,
+      });
     }
   },
 };

@@ -1,6 +1,6 @@
-import { DataTypes, Sequelize } from 'sequelize';
-import { sequelizeInstance } from '../../Utils/DbConnector/sequelize';
-import { STUDENT_TABLE } from '../../Config/table';
+import { DataTypes, Sequelize } from "sequelize";
+import { sequelizeInstance } from "../../Utils/DbConnector/sequelize";
+import { STUDENT_TABLE } from "../../Config/table";
 
 const StudentSchema = {
   // Step 1 Fields
@@ -12,7 +12,7 @@ const StudentSchema = {
     type: DataTypes.STRING(100),
     allowNull: true,
   },
-  fullname:{
+  fullname: {
     type: DataTypes.STRING(100),
     allowNull: true,
   },
@@ -27,12 +27,10 @@ const StudentSchema = {
   userId: {
     type: DataTypes.STRING(100),
     allowNull: true,
-
   },
   email: {
     type: DataTypes.STRING(100),
     allowNull: true,
-
   },
   mobileNumber: {
     type: DataTypes.STRING(15),
@@ -78,14 +76,13 @@ const StudentSchema = {
     type: DataTypes.STRING(50),
     allowNull: true,
   },
-  college:{
+  college: {
     type: DataTypes.STRING(255),
     allowNull: true,
   },
   studentId: {
     type: DataTypes.STRING(50),
     allowNull: true,
-
   },
   sevenFiveSCH: {
     type: DataTypes.STRING(100),
@@ -99,7 +96,6 @@ const StudentSchema = {
     type: DataTypes.STRING(100),
     allowNull: true,
   },
-
 
   // Step 2 Fields
   fatherId: {
@@ -293,7 +289,6 @@ const StudentSchema = {
     allowNull: true,
   },
 
-
   tenthMark: {
     type: DataTypes.STRING(50),
     allowNull: true,
@@ -387,16 +382,100 @@ const StudentSchema = {
     type: DataTypes.STRING(255),
     allowNull: true,
   },
+
+  ////Placemnet
+
+  drivinglicense: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  registernumber: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  internship: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  placement: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  paidtraining: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  gvtjobtraining: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  interestedtraining: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  hoursoftraining: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  expectedsalary: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+
+  preferedlocation: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  currentintern: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  currenttraining: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  latestcgpa: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  noofstandingarrears: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  parttimejob: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  primaryskills: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: true,
+  },
+  secondaryskills: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: true,
+  },
+  noplacemnetreason: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  ///
+
   created_by: {
     type: DataTypes.STRING(100),
     allowNull: true,
   },
-
 };
-
 
 export default sequelizeInstance.define(STUDENT_TABLE, StudentSchema, {
   timestamps: true,
-  createdAt: 'created_on',
-  updatedAt: 'updated_on',
+  createdAt: "created_on",
+  updatedAt: "updated_on",
 });
