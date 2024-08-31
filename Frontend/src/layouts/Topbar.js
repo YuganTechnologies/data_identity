@@ -185,6 +185,7 @@ const Topbar = ({
                 menuItems={ProfileMenus}
                 username={UserDetails?.FirstName + " " + UserDetails?.LastName}
                 userTitle={UserDetails?.Roles}
+                UserDetails={UserDetails ?? ''}
               />
             </li>
           </ul>

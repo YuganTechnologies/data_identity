@@ -35,7 +35,7 @@ const ProfileDropdown = (props) => {
         </span>
         <span>
 
-          <span className="account-position">{props.userTitle}</span>
+          <span className="account-user-name">{props.UserDetails}</span>
         </span>
       </Dropdown.Toggle>
       <Dropdown.Menu
