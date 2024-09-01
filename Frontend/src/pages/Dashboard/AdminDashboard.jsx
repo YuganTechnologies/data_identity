@@ -67,17 +67,34 @@ const generateValidationSchema = (fields) => {
           .typeError(`${field.label} must be a number`);
       }
     } else if (field.type === "email") {
-      shape[field.name] = yup
-        .string()
-        .email("Invalid email address")
-        .required(`${field.label} is required`);
+      if (!field.optional) {
+        shape[field.name] = yup
+          .string()
+          .email("Invalid email address")
+          .required(`${field.label} is required`);
+      }
     } else if (field.type === "selectmulti") {
-      shape[field.name] = yup.array();
+      if (!field.optional) {
+        shape[field.name] = yup
+          .array()
+          .min(1, `${field.label} must have at least one selection`)
+          .required(`${field.label} is required`);
+      }
     } else if (field.type === "text" && field.name === "phoneNumber") {
-      shape[field.name] = yup
-        .string()
-        .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
-        .required(`${field.label} is required`);
+      if (!field.optional) {
+        shape[field.name] = yup
+          .string()
+          .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
+          .required(`${field.label} is required`);
+      }
+    } else if (field.type === "otherinselect") {
+      if (!field.optional) {
+        shape[field.name] = yup.string().when(field.depends, {
+          is: (value) => value?.includes("Others"),  // Check if the dependent field includes "Other"
+          then: yup.string().required(`${field.label} is required`),  // Make the field required if "Other" is selected
+          otherwise: yup.string(),  // No specific validation if "Other" is not selected
+        });
+      }
     } else {
       if (!field.optional) {
         shape[field.name] = yup.string().required(`${field.label} is required`);
@@ -396,8 +413,22 @@ const MultiStepForm = () => {
             placeholder={field.placeholder}
             data={field.options}
             defaultValue={formik.values[field.name]}
-            onChange={(value) => formik.setFieldValue(field.name, value)}
+            onChange={(value) => {
+              formik.setFieldValue(field.name, value);
+            }}
+            error={formik.touched[field.name] && formik.errors[field.name]}
           />
+        ) : field.type === "otherinselect" ? (
+          formik.values[field.depends]?.includes("Others") && (
+            <TextInput
+              label={field.label}
+              defaultValue={formik.values[field.name]}
+              placeholder={field.placeholder}
+              type={field.type}
+              {...formik.getFieldProps(field.name)}
+              error={formik.touched[field.name] && formik.errors[field.name]}
+            />
+          )
         ) : field.type === "autocomplete" ? (
           <div>
             <Autocomplete

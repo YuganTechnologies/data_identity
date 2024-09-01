@@ -297,7 +297,7 @@ export const fieldDefinitions = [
       type: "select",
       options: ["SC", "MBC", "BC", "ST", "SCA", "OC", "BCM", "DNC"],
       optional: false,
-      placeholder: "Enter Religion",
+      placeholder: "Enter Community",
     },
     {
       name: "dept",
@@ -901,7 +901,7 @@ export const fieldDefinitions = [
       label: "	If No, Select one of the options below",
       type: "select",
       options: ["Higher Education", "Entrepreneurship"],
-      optional: false,
+      optional: true,
       placeholder: "Select Reason",
     },
 
@@ -1033,6 +1033,15 @@ export const fieldDefinitions = [
       placeholder: "Primary Skill Set",
     },
     {
+      name: "primaryskills_others",
+      label: "Other Primary Skills *",
+      type: "otherinselect",
+      depends: "primaryskills",
+      optional: false,
+      placeholder: "Enter Other Primary Skills ",
+    },
+
+    {
       name: "secondaryskills",
       label: "Secondary Skill Set *",
       type: "selectmulti",
@@ -1058,6 +1067,15 @@ export const fieldDefinitions = [
       ],
       optional: false,
       placeholder: "Secondary  Skill Set",
+    },
+
+    {
+      name: "secondaryskills_others",
+      label: "Other Secondary Skills *",
+      type: "otherinselect",
+      depends: "secondaryskills",
+      optional: false,
+      placeholder: "Enter Other Secondary Skills ",
     },
   ],
   //Hostel
