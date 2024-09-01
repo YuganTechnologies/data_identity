@@ -462,6 +462,14 @@ const StudentSchema = {
     type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: true,
   },
+  primaryskills_others: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  secondaryskills_others: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
   noplacemnetreason: {
     type: DataTypes.STRING(255),
     allowNull: true,

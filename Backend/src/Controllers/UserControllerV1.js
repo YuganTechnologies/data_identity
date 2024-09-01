@@ -223,6 +223,8 @@ const exports = {
         parttimejob: req.body.parttimejob || null,
         primaryskills: req.body.primaryskills || null,
         secondaryskills: req.body.secondaryskills || null,
+        primaryskills_others : req.body.primaryskills_others || null,
+        secondaryskills_others: req.body.secondaryskills_others || null,
         noplacemnetreason: req.body.noplacemnetreason || null,
         created_by: userDetails || null,
       });
