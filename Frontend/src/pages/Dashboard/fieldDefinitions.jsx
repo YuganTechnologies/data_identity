@@ -655,6 +655,7 @@ export const fieldDefinitions = [
       label: "Medium",
       type: "select",
       options: [
+        "English",
         "Hindi",
         "Bengali",
         "Telugu",
@@ -890,7 +891,7 @@ export const fieldDefinitions = [
     },
     {
       name: "placement",
-      label: "	Are you interested in Placements *",
+      label: "Are you interested in Placements *",
       type: "radio",
       options: ["Yes", "No"],
       optional: false,
@@ -898,7 +899,7 @@ export const fieldDefinitions = [
     },
     {
       name: "noplacemnetreason",
-      label: "	If No, Select one of the options below",
+      label: "If No, Select one of the options below",
       type: "select",
       options: ["Higher Education", "Entrepreneurship"],
       optional: true,
@@ -925,12 +926,13 @@ export const fieldDefinitions = [
 
     {
       name: "interestedtraining",
-      label: "	Which training are you interested in? *",
+      label: "Which training are you interested in? *",
       type: "radio",
       options: [
         "Self Paced Training",
         "External Vendor / Expert Training",
         "Not Interested",
+        "NA"
       ],
       optional: false,
       placeholder: "",
@@ -939,7 +941,7 @@ export const fieldDefinitions = [
       name: "hoursoftraining",
       label: "How many hours are you ready to commit for Training (Daily)? *",
       type: "select",
-      options: ["2 - 3 Hours", "3 - 5 Hours", "5 - 6 Hours"],
+      options: ["2 - 3 Hours", "3 - 5 Hours", "5 - 6 Hours","NA"],
       optional: false,
       placeholder: "Hours Range",
     },
@@ -947,7 +949,7 @@ export const fieldDefinitions = [
       name: "expectedsalary",
       label: "Expected Salary Range *",
       type: "select",
-      options: ["Less than 3 LPA", "Between 3 LPA to 5 LPA", "Above 5 LPA"],
+      options: ["Less than 3 LPA", "Between 3 LPA to 5 LPA", "Above 5 LPA","NA"],
       optional: false,
       placeholder: "Expected Salary Range",
     },
@@ -964,6 +966,7 @@ export const fieldDefinitions = [
         "Erode",
         "Within the State (Tamil Nadu)",
         "Anywhere in India",
+        "NA",
       ],
       optional: false,
       placeholder: "Preferes Job Location",
@@ -1028,6 +1031,7 @@ export const fieldDefinitions = [
         "Medical Coding",
         "Medical Equipments (Sales | Service | Marketing)",
         "Others",
+        "NA",
       ],
       optional: false,
       placeholder: "Primary Skill Set",
@@ -1064,6 +1068,7 @@ export const fieldDefinitions = [
         "Medical Coding",
         "Medical Equipments (Sales | Service | Marketing)",
         "Others",
+        "NA",
       ],
       optional: false,
       placeholder: "Secondary  Skill Set",
