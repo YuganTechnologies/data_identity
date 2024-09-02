@@ -103,7 +103,7 @@ const exports = {
     try {
       const userDetails = req.headers["userdetails"];
 
-      if (!req.body) {
+      if (!req.body && !req.body.fullname) {
         return res
           .status(400)
           .json({ success: false, message: "Body is Required" });
