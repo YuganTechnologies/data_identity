@@ -227,6 +227,8 @@ const exports = {
         secondaryskills_others: req.body.secondaryskills_others || null,
         noplacemnetreason: req.body.noplacemnetreason || null,
         created_by: userDetails || null,
+        twelethpassoutyear: req.body.twelethpassoutyear || null,
+        tenthpassoutyear: req.body.tenthpassoutyear || null,
       });
 
       if (newStudent) {
