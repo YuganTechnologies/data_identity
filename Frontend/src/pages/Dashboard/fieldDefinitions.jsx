@@ -691,7 +691,7 @@ export const fieldDefinitions = [
     },
     {
       name: "tenthpassoutyear",
-      label: "10th Pass Out Year % *",
+      label: "10th Year of Passing",
       type: "text",
       optional: false,
       placeholder: "Enter 10th Pass out Year",
@@ -705,7 +705,7 @@ export const fieldDefinitions = [
     },
     {
       name: "twelethpassoutyear",
-      label: "12th Pass Out Year % *",
+      label: "12th Year of Passing",
       type: "text",
       optional: false,
       placeholder: "Enter 12th Pass out Year",
@@ -943,7 +943,7 @@ export const fieldDefinitions = [
       label: "Which training are you interested in? *",
       type: "radio",
       options: [
-        "Self Paced Training",
+        "Self Placed Training",
         "External Vendor / Expert Training",
         "Not Interested",
         "NA",
