@@ -281,7 +281,7 @@ const StudentSchema = {
     allowNull: true,
   },
   aadharNo: {
-    type: DataTypes.STRING(12),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   emisNo: {
@@ -355,7 +355,7 @@ const StudentSchema = {
     allowNull: true,
   },
   visitorAadhar: {
-    type: DataTypes.STRING(12),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   visitorPAN: {
