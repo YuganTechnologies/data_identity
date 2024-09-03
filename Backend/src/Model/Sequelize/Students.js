@@ -61,7 +61,7 @@ const StudentSchema = {
     allowNull: true,
   },
   pincode: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   religion: {
@@ -135,7 +135,7 @@ const StudentSchema = {
     allowNull: true,
   },
   fatherPincode: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   fatherProfession: {
@@ -185,7 +185,7 @@ const StudentSchema = {
     allowNull: true,
   },
   motherPincode: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   motherProfession: {
@@ -239,7 +239,7 @@ const StudentSchema = {
     allowNull: true,
   },
   guardianPincode: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   guardianRelationWithStudent: {
@@ -281,7 +281,7 @@ const StudentSchema = {
     allowNull: true,
   },
   aadharNo: {
-    type: DataTypes.STRING(12),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   emisNo: {
@@ -331,7 +331,7 @@ const StudentSchema = {
   },
 
   panCard: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   passportNumber: {
@@ -355,11 +355,11 @@ const StudentSchema = {
     allowNull: true,
   },
   visitorAadhar: {
-    type: DataTypes.STRING(12),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   visitorPAN: {
-    type: DataTypes.STRING(10),
+    type: DataTypes.STRING(100),
     allowNull: true,
   },
   visitorPhone: {
