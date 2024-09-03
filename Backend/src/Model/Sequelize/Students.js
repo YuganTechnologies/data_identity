@@ -474,6 +474,14 @@ const StudentSchema = {
     type: DataTypes.STRING(255),
     allowNull: true,
   },
+  tenthpassoutyear: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
+  twelethpassoutyear: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+  },
   ///
 
   created_by: {
