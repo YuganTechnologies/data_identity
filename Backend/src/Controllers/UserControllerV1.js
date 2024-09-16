@@ -74,12 +74,13 @@ const exports = {
       );
 
       if (isValid) {
+
         const tokenObject = issueJWT(user);
         res.status(200).json({
           success: true,
           UserId: user.username,
-          //role: user.role,
-         // uid: user.uid,
+          role: user.roles,
+          // uid: user.uid,
 
           token: tokenObject.token,
           expiresIn: tokenObject.expires,
@@ -223,7 +224,7 @@ const exports = {
         parttimejob: req.body.parttimejob || null,
         primaryskills: req.body.primaryskills || null,
         secondaryskills: req.body.secondaryskills || null,
-        primaryskills_others : req.body.primaryskills_others || null,
+        primaryskills_others: req.body.primaryskills_others || null,
         secondaryskills_others: req.body.secondaryskills_others || null,
         noplacemnetreason: req.body.noplacemnetreason || null,
         created_by: userDetails || null,
@@ -262,10 +263,10 @@ const exports = {
         where: { studentId: req.body.studentid },
       });
 
-      if(alreadysubmiteduser){
+      if (alreadysubmiteduser) {
         return res
-        .status(400)
-        .json({ success: false, msg: "Student Details are already submitted! Please contact admin for changes" });
+          .status(400)
+          .json({ success: false, msg: "Student Details are already submitted! Please contact admin for changes" });
       }
       res.status(200).json({
         success: true,
@@ -286,6 +287,54 @@ const exports = {
       });
     }
   },
+
+  addmissingid: async (req, res) => {
+    try {
+      const userDetails = req.headers["userdetails"];
+      const userrole = req.headers["userrole"];
+      console.log('userrole', userrole)
+      if (userrole !== '"ADMIN"') {
+        return res
+          .status(400)
+          .json({ success: false, message: "Only Admin can able to add ID" });
+      }
+      if (!req.body || !req.body.firstName || !req.body.studentId) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Details are Required" });
+      }
+
+      const addmissStudent = await UploadstudentsModel.create({
+
+        firstName: req.body.firstName || null,
+        surname: req.body.surname || null,
+
+        gender: req.body.gender || null,
+        dateOfBirth: req.body.dateOfBirth || null,
+
+
+        dept: req.body.dept || null,
+        batch: req.body.batch || null,
+        college: req.body.college || null,
+        studentId: req.body.studentId || null,
+        created_by: userDetails || null
+      });
+
+      if (addmissStudent) {
+        return res
+          .status(200)
+          .json({ success: true, message: "Student Added successfully." });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while creating the student.",
+        error: err,
+      });
+    }
+  },
+
 };
 
 // Controller function for adding a new report with file upload

@@ -11,11 +11,21 @@ class SessionHelper {
   static SetUserDetails(UserDetails) {
     localStorage.setItem("UserDetails", JSON.stringify(UserDetails));
   }
+  static SetUserRole(role) {
+    localStorage.setItem("role", JSON.stringify(role));
+  }
+
   static GetUserDetails() {
     return JSON.parse(localStorage.getItem("UserDetails"));
   }
+  static GetUserRole() {
+    return JSON.parse(localStorage.getItem("role"));
+  }
   static RemoveUserDetails() {
     return localStorage.removeItem("UserDetails");
+  }
+  static RemoveUserRole() {
+    return localStorage.removeItem("role");
   }
   static SetRecoverVerifyEmail(Email) {
     return localStorage.setItem("RecoverVerifyEmail", Email);

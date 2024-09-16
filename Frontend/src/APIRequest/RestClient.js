@@ -19,6 +19,8 @@ function axiosHeaders() {
   axios.defaults.headers.common["UserDetails"] =
     JSON.stringify(SessionHelper.GetUserDetails());
 
+    axios.defaults.headers.common["UserRole"] =
+    JSON.stringify(SessionHelper.GetUserRole());
 
 }
 
@@ -28,7 +30,7 @@ const ResponseReturn = (response) => {
 };
 
 const ErrorReturn = (error) => {
-  console.log(error)
+
   store.dispatch(RemoveLoading());
   if (error.response.status === 500) {
     ToastMessage.errorMessage("Sorry, Something went wrong");
@@ -36,6 +38,9 @@ const ErrorReturn = (error) => {
     ToastMessage.errorMessage(error.response.data.msg);
     store.dispatch(SetLogout());
     store.dispatch(RemoveUserDetails());
+  }else if (error.response.status === 400 && error.response.data.msg === 'Student ID not found'){
+    ToastMessage.errorMessage(error.response.data.msg);
+    return error
   } else {
    
     ToastMessage.errorMessage(error.response.data.msg);
