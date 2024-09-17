@@ -1,7 +1,7 @@
 //Internal Import
 import ToastMessage from "../helpers/ToastMessage";
 import { SetLogin } from "../redux/slices/AuthSlice";
-import { SetUserDetails } from "../redux/slices/UserSlice";
+import { SetUserDetails, SetUserRole } from "../redux/slices/UserSlice";
 import store from "../redux/store/store";
 import RestClient from "./RestClient";
 
@@ -12,6 +12,8 @@ class AuthRequest {
     if (data) {
       store.dispatch(SetLogin(data.data?.token));
       store.dispatch(SetUserDetails(data.data?.UserId));
+      store.dispatch(SetUserRole(data.data?.role));
+      
       ToastMessage.successMessage("User Login Successfull");
     } else {
       ToastMessage.errorMessage("Invalid Credentials");
@@ -22,7 +24,7 @@ class AuthRequest {
     const data = await RestClient.postRequest("/get-student", postBody);
 
     if (data) {
-      ToastMessage.successMessage("Student Details Fetched Successfull");
+     // ToastMessage.successMessage("Student Details Fetched Successfull");
       return data;
     } else {
      // ToastMessage.errorMessage("Invalid Student ID");
@@ -31,6 +33,17 @@ class AuthRequest {
 
   static async AddStudent(postBody) {
     const data = await RestClient.postRequest("/create-student", postBody);
+
+    if (data) {
+      ToastMessage.successMessage("Student Added Successfull");
+      window.location.reload();
+    } else {
+      ToastMessage.errorMessage("Error in Adding");
+    }
+  }
+
+  static async AddMissingID(postBody) {
+    const data = await RestClient.postRequest("/add-missing-id", postBody);
 
     if (data) {
       ToastMessage.successMessage("Student Added Successfull");

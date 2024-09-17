@@ -19,7 +19,9 @@ const Login = React.lazy(() => import("../pages/Account/Login"));
 const AdminDashboard = React.lazy(() =>
   import("../pages/Dashboard/AdminDashboard"),
 );
-
+const AddStudent = React.lazy(() =>
+  import("../pages/AddStudent/Addstudent"),
+);
 
 const Logout = React.lazy(() => import("../pages/Account/Logout"));
 
@@ -34,7 +36,7 @@ const LoadComponent = ({ component: Component }) => {
 
 const AllRoutes = () => {
   const { LayoutType } = useSelector((state) => state.Setting);
-  const { UserDetails } = useSelector((state) => state.User);
+  const { UserDetails, role } = useSelector((state) => state.User);
   const { AccessToken } = useSelector((state) => state.Auth);
 
   const getLayout = () => {
@@ -67,6 +69,13 @@ const AllRoutes = () => {
             path="/dashboard"
             element={<LoadComponent component={AdminDashboard} />}
           />
+          {role === 'ADMIN' && (
+            <Route
+              path="/add-student"
+              element={<LoadComponent component={AddStudent} />}
+            />
+          )}
+
 
 
           <Route path="*" element={<Navigate to="/dashboard" />} />

@@ -3,14 +3,14 @@ import jwt from 'jsonwebtoken';
 const SECRET_CODE = '3f8d92b6a4$#2c2e1f'; // Replace with your actual secret code
 
 function issueJWT(user) {
-  const { uid, username, role } = user;
+  const { uid, username, roles } = user;
   const expirationDuration = 60 * 24 * 60 * 60 * 1000; // 60 days
   const expirationTime = Date.now() + expirationDuration;
   
   const payload = {
     sub: uid,
     name: username,
-    role: role,
+    role: roles,
     iat: Date.now(),
     exp: expirationTime,
   };

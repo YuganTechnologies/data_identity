@@ -36,6 +36,11 @@ export const UserSchema = {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
+  roles:{
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  
+  }
 };
 
 export default sequelizeInstance.define(USERS_TABLE, UserSchema, {

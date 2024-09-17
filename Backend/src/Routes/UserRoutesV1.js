@@ -12,5 +12,8 @@ router.post('/register', Controller.Register);
 router.use(passport.authenticate('jwt', { session: false }));
 router.post('/create-student', Controller.addstudent);
 router.post('/get-student', Controller.getstudent);
+router.post('/add-missing-id', Controller.addmissingid);
+
+
 
 export default router;
