@@ -31,6 +31,17 @@ class AuthRequest {
     }
   }
 
+  static async Getallstudent() {
+    const data = await RestClient.postRequest("/getall-student");
+
+    if (data) {
+   
+      return data;
+    } else {
+     
+    }
+  }
+
   static async AddStudent(postBody) {
     const data = await RestClient.postRequest("/create-student", postBody);
 

@@ -22,7 +22,9 @@ const AdminDashboard = React.lazy(() =>
 const AddStudent = React.lazy(() =>
   import("../pages/AddStudent/Addstudent"),
 );
-
+const Listall = React.lazy(() =>
+  import("../pages/student_list/Listall"),
+);
 const Logout = React.lazy(() => import("../pages/Account/Logout"));
 
 
@@ -70,15 +72,25 @@ const AllRoutes = () => {
             element={<LoadComponent component={AdminDashboard} />}
           />
           {role === 'ADMIN' && (
-            <Route
-              path="/add-student"
-              element={<LoadComponent component={AddStudent} />}
-            />
+            <>
+              <Route
+                path="/add-student"
+                element={<LoadComponent component={AddStudent} />}
+              />
+              <Route
+                path="/listall-student"
+                element={<LoadComponent component={Listall} />}
+              />
+            </>
           )}
 
+          {role === 'ADMIN' ? (
+            <Route path="*" element={<Navigate to="/listall-student" />} />
+          ) :
+            (<Route path="*" element={<Navigate to="/dashboard" />} />)
+          }
 
 
-          <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>
     );

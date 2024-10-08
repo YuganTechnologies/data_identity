@@ -10,7 +10,7 @@ import {
   Group,
   Checkbox,
   Radio,
-  RadioGroup,
+
   Switch,
   Autocomplete,
   Grid,
@@ -474,7 +474,7 @@ const MultiStepForm = () => {
             error={formik.touched[field.name] && formik.errors[field.name]}
           />
         ) : field.type === "radio" ? (
-          <RadioGroup
+          <Radio.Group
             label={field.label}
             {...formik.getFieldProps(field.name)}
             error={formik.touched[field.name] && formik.errors[field.name]}
@@ -487,7 +487,7 @@ const MultiStepForm = () => {
                 <Radio key={option} value={option} label={option} />
               ))}
             </div>
-          </RadioGroup>
+          </Radio.Group>
         ) : null}
       </Grid.Col>
     ));

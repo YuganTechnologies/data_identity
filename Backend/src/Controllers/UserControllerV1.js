@@ -287,6 +287,30 @@ const exports = {
       });
     }
   },
+  getallstudent: async (req, res) => {
+    try {
+      const user = await StudentModel.findAll();
+
+      if (!user) {
+        return res
+          .status(400)
+          .json({ success: false, msg: "Student ID not found" });
+      }
+
+  
+      res.status(200).json({
+        success: true,
+        data: user,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        success: false,
+        message: "Error occurred while checking the Student ID",
+        error: err,
+      });
+    }
+  },
 
   addmissingid: async (req, res) => {
     try {
