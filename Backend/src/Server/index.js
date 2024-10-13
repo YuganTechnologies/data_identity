@@ -140,7 +140,7 @@ const initServer = (handlers) => {
   handlers.forEach((handler) => {
     app.use(handler.path, handler.router);
   });
-  console.log(path.join(__dirname))
+
   app.use('/static/images', express.static(path.join(__dirname, '../../images')));
 
   try {

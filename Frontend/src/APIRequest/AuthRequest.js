@@ -30,6 +30,27 @@ class AuthRequest {
      // ToastMessage.errorMessage("Invalid Student ID");
     }
   }
+  static async Geteditstudent(postBody) {
+    const response = await RestClient.postRequest("/get-editstudent", postBody);
+
+    if (response) {
+     // ToastMessage.successMessage("Student Details Fetched Successfull");
+      return response.data;
+    } else {
+     // ToastMessage.errorMessage("Invalid Student ID");
+    }
+  }
+
+  static async Getallstudent() {
+    const data = await RestClient.postRequest("/getall-student");
+
+    if (data) {
+   
+      return data;
+    } else {
+     
+    }
+  }
 
   static async AddStudent(postBody) {
     const data = await RestClient.postRequest("/create-student", postBody);
@@ -41,7 +62,16 @@ class AuthRequest {
       ToastMessage.errorMessage("Error in Adding");
     }
   }
+  static async UpdateStudent(postBody) {
+    const data = await RestClient.postRequest("/update-student", postBody);
 
+    if (data) {
+      ToastMessage.successMessage("Student Updated Successfull");
+      window.location.reload();
+    } else {
+      ToastMessage.errorMessage("Error in updating");
+    }
+  }
   static async AddMissingID(postBody) {
     const data = await RestClient.postRequest("/add-missing-id", postBody);
 

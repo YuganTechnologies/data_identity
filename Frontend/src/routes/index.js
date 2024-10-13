@@ -22,7 +22,12 @@ const AdminDashboard = React.lazy(() =>
 const AddStudent = React.lazy(() =>
   import("../pages/AddStudent/Addstudent"),
 );
-
+const EditStudent = React.lazy(() =>
+  import("../pages/edit_student/EditStudent"),
+);
+const Listall = React.lazy(() =>
+  import("../pages/student_list/Listall"),
+);
 const Logout = React.lazy(() => import("../pages/Account/Logout"));
 
 
@@ -65,20 +70,48 @@ const AllRoutes = () => {
     return (
       <Routes>
         <Route to="/" element={<Layout />}>
-          <Route
-            path="/dashboard"
-            element={<LoadComponent component={AdminDashboard} />}
-          />
+
           {role === 'ADMIN' && (
-            <Route
-              path="/add-student"
-              element={<LoadComponent component={AddStudent} />}
-            />
+            <>
+              <Route
+                path="/dashboard"
+                element={<LoadComponent component={AdminDashboard} />}
+              />
+              <Route
+                path="/add-student"
+                element={<LoadComponent component={AddStudent} />}
+              />
+              <Route
+                path="/edit-student"
+                element={<LoadComponent component={EditStudent} />}
+              />
+              <Route
+                path="/listall-student"
+                element={<LoadComponent component={Listall} />}
+              />
+            </>
           )}
 
+          {role === 'VIEWER' && (
+            <>
+              <Route
+                path="/dashboard"
+                element={<LoadComponent component={AdminDashboard} />}
+              />
+
+              <Route
+                path="/listall-student"
+                element={<LoadComponent component={Listall} />}
+              />
+            </>
+          )}
+          {role === 'ADMIN' || role === 'VIEWER' ? (
+            <Route path="*" element={<Navigate to="/listall-student" />} />
+          ) :
+            (<Route path="*" element={<Navigate to="/dashboard" />} />)
+          }
 
 
-          <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>
     );

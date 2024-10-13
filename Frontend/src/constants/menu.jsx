@@ -1,6 +1,6 @@
 //External Lib Import
 
-import { RiDashboardLine, RiEdit2Fill } from "react-icons/ri";
+import { RiDashboardLine, RiEdit2Fill, RiListCheck } from "react-icons/ri";
 
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -10,7 +10,14 @@ const MenuItems = () => {
   const { role } = useSelector((state) => state.User);
 
   return [
-    { key: "navigation", label: t("Admin Routes"), isTitle: true },
+    { key: "navigation", label: t("Menus"), isTitle: true },
+    (role === "ADMIN" || role === "VIEWER") && {
+      key: "listall_student",
+      label: t("Students List"),
+      url: "/listall-student",
+      isTitle: false,
+      icon: <RiListCheck className="side-bar-item-icon" />,
+    },
     {
       key: "Dashboard",
       label: t("Data Collection Form"),
@@ -25,6 +32,7 @@ const MenuItems = () => {
       isTitle: false,
       icon: <RiEdit2Fill className="side-bar-item-icon" />,
     },
+  
   ];
 };
 
