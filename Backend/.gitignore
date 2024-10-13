@@ -3,7 +3,7 @@
 
 # production
 /dist
-
+_settings.env
 # debug
 npm-debug.log*
 yarn-debug.log*
