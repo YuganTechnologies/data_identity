@@ -10,8 +10,8 @@ const MenuItems = () => {
   const { role } = useSelector((state) => state.User);
 
   return [
-    { key: "navigation", label: t("Admin Routes"), isTitle: true },
-    role === "ADMIN" && {
+    { key: "navigation", label: t("Menus"), isTitle: true },
+    (role === "ADMIN" || role === "VIEWER") && {
       key: "listall_student",
       label: t("Students List"),
       url: "/listall-student",

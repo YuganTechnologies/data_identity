@@ -10,7 +10,6 @@ import {
   Group,
   Checkbox,
   Radio,
-
   Switch,
   Autocomplete,
   Grid,
@@ -19,6 +18,8 @@ import {
 } from "@mantine/core";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Breadcrumbs, Anchor } from "@mantine/core";
 import {
   fieldDefinitions,
   stepNames,
@@ -31,7 +32,6 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 import "./style.css"; // Ensure this import matches the path to your CSS file
 import AuthRequest from "../../APIRequest/AuthRequest";
-import ToastMessage from "../../helpers/ToastMessage";
 
 // Function to generate Yup validation schema based on fields
 const generateValidationSchema = (fields) => {
@@ -86,30 +86,37 @@ const generateValidationSchema = (fields) => {
         shape[field.name] = yup
           .string()
           .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
-          .required(`${field.label} is required`);
+          .required(`${field.label} is required`)
+          .nullable();
       }
     } else if (field.type === "otherinselect") {
       if (!field.optional) {
         shape[field.name] = yup.string().when(field.depends, {
           is: (value) => value?.includes("Others"), // Check if the dependent field includes "Other"
           then: yup.string().required(`${field.label} is required`), // Make the field required if "Other" is selected
-          otherwise: yup.string(), // No specific validation if "Other" is not selected
+          otherwise: yup.string().nullable(), // No specific validation if "Other" is not selected
         });
       }
     } else {
       if (!field.optional) {
-        shape[field.name] = yup.string().required(`${field.label} is required`);
+        shape[field.name] = yup
+          .string()
+          .required(`${field.label} is required`)
+          .nullable();
       } else {
-        shape[field.name] = yup.string();
+        shape[field.name] = yup.string().nullable();
       }
     }
   });
   return yup.object().shape(shape);
 };
 
-const MultiStepForm = () => {
+const EditingStudent = () => {
   const [active, setActive] = useState(0);
+  const location = useLocation();
   const steps = fieldDefinitions.length;
+  const studentId = location.state || {};
+
   const [includeFather, setIncludeFather] = useState(false);
   const [includeMother, setIncludeMother] = useState(false);
   const [includeGuardian, setIncludeGuardian] = useState(false);
@@ -119,7 +126,7 @@ const MultiStepForm = () => {
   // Function to dynamically create the validation schema based on the step and selections
   const createValidationSchema = () => {
     let fieldsToValidate = [...fieldDefinitions[active]];
-    if (active === 2) {
+    if (active === 1) {
       if (includeFather)
         fieldsToValidate = [...fieldsToValidate, ...initialFatherValues];
       if (includeMother)
@@ -160,11 +167,11 @@ const MultiStepForm = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           setSubmitLoading(true);
-          const resposne = AuthRequest.AddMissingID(values);
-        
+          const resposne = AuthRequest.UpdateStudent(values);
+
           if (resposne.status === 200) {
             setTimeout(() => {
-              //   window.location.reload();
+              navigate("/listall-student");
             }, 2000);
           }
         }
@@ -211,36 +218,265 @@ const MultiStepForm = () => {
   // Function to fetch student data
   const fetchStudentData = async () => {
     const payload = {
-      studentid: formik.values["studentId"],
+      studentid: studentId,
     };
 
     try {
       // Await the asynchronous API call
-      const response = await AuthRequest.Getstudent(payload);
+      const response = await AuthRequest.Geteditstudent(payload);
 
-      if (
-        response.response.status === 400 &&
-        response.response.data.msg === "Student ID not found"
-      ) {
-        ToastMessage.successMessage("Please add the Student Details");
+      if (response.success) {
+        if (response.data.fatherFirstName) {
+          setIncludeFather(true);
+        }
+        if (response.data.motherFirstName) {
+          setIncludeMother(true);
+        }
+        if (response.data.guardianFirstName) {
+          setIncludeGuardian(true);
+        }
 
-        setActive((prev) => (prev < steps - 1 ? prev + 1 : prev));
+        // Handle successful response
+      
         setSearchloading(false);
+        formik.setFieldValue("studentId", response.data.studentId);
+        formik.setFieldValue("firstName", response.data.firstName);
+        formik.setFieldValue("surname", response.data.surname);
+        formik.setFieldValue("fullname", response.data.fullname);
+        formik.setFieldValue("gender", response.data.gender);
+        formik.setFieldValue("dateOfBirth", response.data.dateOfBirth);
+        formik.setFieldValue("bloodGroup", response.data.bloodGroup);
+        formik.setFieldValue("email", response.data.email);
+        formik.setFieldValue("mobileNumber", response.data.mobileNumber);
+        formik.setFieldValue("whatsappNumber", response.data.whatsappNumber);
+        formik.setFieldValue("address", response.data.address);
+        formik.setFieldValue("area", response.data.area);
+        formik.setFieldValue("talukaCity", response.data.talukaCity);
+        formik.setFieldValue("townVillage", response.data.townVillage);
+        formik.setFieldValue("district", response.data.district);
+        formik.setFieldValue("state", response.data.state);
+        formik.setFieldValue("pincode", response.data.pincode);
+        formik.setFieldValue("religion", response.data.religion);
+        formik.setFieldValue("community", response.data.community);
+        formik.setFieldValue("dept", response.data.dept);
+        formik.setFieldValue("batch", response.data.batch);
+        formik.setFieldValue("college", response.data.college);
+        formik.setFieldValue("75sch", response.data.sevenFiveSCH);
+        formik.setFieldValue("fg", response.data.fg);
+        formik.setFieldValue("postMatric", response.data.postMatric);
+        formik.setFieldValue("schoolType", response.data.schoolType);
+        formik.setFieldValue("schoolName", response.data.schoolName);
+        formik.setFieldValue("medium", response.data.medium);
+        formik.setFieldValue("tenthMark", response.data.tenthMark);
+        formik.setFieldValue(
+          "tenthpassoutyear",
+          response.data.tenthpassoutyear
+        );
+        formik.setFieldValue(
+          "twelfthMarkPercent",
+          response.data.twelfthMarkPercent
+        );
+        formik.setFieldValue(
+          "twelethpassoutyear",
+          response.data.twelethpassoutyear
+        );
+        formik.setFieldValue(
+          "twelfthMathsMarkOutOf100",
+          response.data.twelfthMathsMarkOutOf100
+        );
+        formik.setFieldValue(
+          "twelfthPhysicsMarkOutOf100",
+          response.data.twelfthPhysicsMarkOutOf100
+        );
+        formik.setFieldValue(
+          "twelfthChemistryMarkOutOf100",
+          response.data.twelfthChemistryMarkOutOf100
+        );
+        formik.setFieldValue(
+          "twelfthBilologyMarkOutOf100",
+          response.data.twelfthBilologyMarkOutOf100
+        );
+        formik.setFieldValue(
+          "twelfthBotanyMarkOutOf100",
+          response.data.twelfthBotanyMarkOutOf100
+        );
+        formik.setFieldValue(
+          "twelfthZoologyMarkOutOf100",
+          response.data.twelfthZoologyMarkOutOf100
+        );
+        formik.setFieldValue(
+          "twelfthCompScienceMarkOutOf100",
+          response.data.twelfthCompScienceMarkOutOf100
+        );
+        formik.setFieldValue("aadharNo", response.data.aadharNo);
+        formik.setFieldValue("panCard", response.data.panCard);
+        formik.setFieldValue("passportNumber", response.data.passportNumber);
+        formik.setFieldValue("drivinglicense", response.data.drivinglicense);
+        formik.setFieldValue("emisNo", response.data.emisNo);
+        formik.setFieldValue("bankDetails", response.data.bankDetails);
+        formik.setFieldValue("languagesKnown", response.data.languagesKnown);
+        formik.setFieldValue(
+          "foreignLanguagesKnown",
+          response.data.foreignLanguagesKnown
+        );
+        formik.setFieldValue("registernumber", response.data.registernumber);
+        formik.setFieldValue("internship", response.data.internship);
+        formik.setFieldValue("placement", response.data.placement);
+        formik.setFieldValue(
+          "noplacemnetreason",
+          response.data.noplacemnetreason
+        );
+        formik.setFieldValue("paidtraining", response.data.paidtraining);
+        formik.setFieldValue("gvtjobtraining", response.data.gvtjobtraining);
+        formik.setFieldValue(
+          "interestedtraining",
+          response.data.interestedtraining
+        );
+        formik.setFieldValue("hoursoftraining", response.data.hoursoftraining);
+        formik.setFieldValue("expectedsalary", response.data.expectedsalary);
+        formik.setFieldValue(
+          "preferedlocation",
+          response.data.preferedlocation
+        );
+        formik.setFieldValue("currentintern", response.data.currentintern);
+        formik.setFieldValue("currenttraining", response.data.currenttraining);
+        formik.setFieldValue("latestcgpa", response.data.latestcgpa);
+        formik.setFieldValue(
+          "noofstandingarrears",
+          response.data.noofstandingarrears
+        );
+        formik.setFieldValue("parttimejob", response.data.parttimejob);
+        formik.setFieldValue("primaryskills", response.data.primaryskills);
+        formik.setFieldValue(
+          "primaryskills_others",
+          response.data.primaryskills_others
+        );
+        formik.setFieldValue("secondaryskills", response.data.secondaryskills);
+        formik.setFieldValue(
+          "secondaryskills_others",
+          response.data.secondaryskills_others
+        );
+        formik.setFieldValue("foodPreference", response.data.foodPreference);
+        formik.setFieldValue("hostelStudent", response.data.hostelStudent);
+        formik.setFieldValue("visitorName", response.data.visitorName);
+        formik.setFieldValue("visitorRelation", response.data.visitorRelation);
+        formik.setFieldValue("visitorAadhar", response.data.visitorAadhar);
+        formik.setFieldValue("visitorPAN", response.data.visitorPAN);
+        formik.setFieldValue("visitorPhone", response.data.visitorPhone);
+        formik.setFieldValue("visitorDOB", response.data.visitorDOB);
+        formik.setFieldValue("visitorAddress", response.data.visitorAddress);
+
+        formik.setFieldValue("fatherFirstName", response.data.fatherFirstName);
+        formik.setFieldValue(
+          "fatherDateOfBirth",
+          response.data.fatherDateOfBirth
+        );
+        formik.setFieldValue("fatherEmail", response.data.fatherEmail);
+        formik.setFieldValue(
+          "fatherPrimaryMobileNo",
+          response.data.fatherPrimaryMobileNo
+        );
+        formik.setFieldValue(
+          "fatherSecondaryMobileNo",
+          response.data.fatherSecondaryMobileNo
+        );
+        formik.setFieldValue(
+          "fatherAddressLine1",
+          response.data.fatherAddressLine1
+        );
+        formik.setFieldValue("fatherArea", response.data.fatherArea);
+        formik.setFieldValue(
+          "fatherTownVillage",
+          response.data.fatherTownVillage
+        );
+        formik.setFieldValue("fatherPincode", response.data.fatherPincode);
+        formik.setFieldValue(
+          "fatherProfession",
+          response.data.fatherProfession
+        );
+        formik.setFieldValue("fatherIncome", response.data.fatherIncome);
+        formik.setFieldValue("motherFirstName", response.data.motherFirstName);
+        formik.setFieldValue(
+          "motherDateOfBirth",
+          response.data.motherDateOfBirth
+        );
+        formik.setFieldValue("motherEmail", response.data.motherEmail);
+        formik.setFieldValue(
+          "motherPrimaryMobileNo",
+          response.data.motherPrimaryMobileNo
+        );
+        formik.setFieldValue(
+          "motherSecondaryMobileNo",
+          response.data.motherSecondaryMobileNo
+        );
+        formik.setFieldValue(
+          "motherAddressLine1",
+          response.data.motherAddressLine1
+        );
+        formik.setFieldValue("motherArea", response.data.motherArea);
+        formik.setFieldValue(
+          "motherTownVillage",
+          response.data.motherTownVillage
+        );
+        formik.setFieldValue("motherPincode", response.data.motherPincode);
+        formik.setFieldValue(
+          "motherProfession",
+          response.data.motherProfession
+        );
+        formik.setFieldValue("motherIncome", response.data.motherIncome);
+        formik.setFieldValue(
+          "guardianFirstName",
+          response.data.guardianFirstName
+        );
+        formik.setFieldValue("guardianGender", response.data.guardianGender);
+        formik.setFieldValue(
+          "guardianDateOfBirth",
+          response.data.guardianDateOfBirth
+        );
+        formik.setFieldValue("guardianEmail", response.data.guardianEmail);
+        formik.setFieldValue(
+          "guardianPrimaryMobileNo",
+          response.data.guardianPrimaryMobileNo
+        );
+        formik.setFieldValue(
+          "guardianSecondaryMobileNo",
+          response.data.guardianSecondaryMobileNo
+        );
+        formik.setFieldValue(
+          "guardianAddressLine1",
+          response.data.guardianAddressLine1
+        );
+        formik.setFieldValue("guardianArea", response.data.guardianArea);
+        formik.setFieldValue(
+          "guardianTownVillage",
+          response.data.guardianTownVillage
+        );
+        formik.setFieldValue("guardianPincode", response.data.guardianPincode);
+        formik.setFieldValue(
+          "guardianRelationWithStudent",
+          response.data.guardianRelationWithStudent
+        );
+        formik.setFieldValue(
+          "guardianProfession",
+          response.data.guardianProfession
+        );
+        formik.setFieldValue("guardianIncome", response.data.guardianIncome);
+
+        setActive((prev) => 0);
       } else {
         // Handle non-200 response or errors
         setSearchloading(false);
-        console.error("Student ID exists!", response);
+        console.error("Error fetching student data", response);
       }
     } catch (error) {
       setSearchloading(false);
-      ToastMessage.errorMessage(
-        "Student ID exists! Add details in Master form"
-      );
-
       console.error("Error during API call", error);
     }
   };
 
+  useEffect(() => {
+    fetchStudentData();
+  }, [studentId]);
   // Main function to handle the search
   const handleSearch = async () => {
     // First, validate the form fields
@@ -258,7 +494,7 @@ const MultiStepForm = () => {
   const handleNextStep = () => {
     const currentFields = [...fieldDefinitions[active]];
 
-    if (active === 2) {
+    if (active === 1) {
       if (includeFather) currentFields.push(...initialFatherValues);
       if (includeMother) currentFields.push(...initialMotherValues);
       if (includeGuardian) currentFields.push(...initialGuardianValues);
@@ -296,7 +532,7 @@ const MultiStepForm = () => {
 
   const renderFields = () => {
     let fieldsToRender = fieldDefinitions[active];
-    if (active === 2) {
+    if (active === 1) {
       if (includeFather)
         fieldsToRender = [...fieldsToRender, ...initialFatherValues];
       if (includeMother)
@@ -492,113 +728,116 @@ const MultiStepForm = () => {
       </Grid.Col>
     ));
   };
-
+  const items = [
+    { title: "Student-List", href: "/listall-student" },
+    { title: "Edit-Student", href: "#" },
+  ].map((item, index) => (
+    <Anchor href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
+  const navigate = useNavigate();
   return (
-    <Container
-      size="xl"
-      style={{ width: "100%", marginTop: "50px", padding: "10px" }}
-    >
-      <Stepper active={active} breakpoint="sm" size="xs">
-        {stepNames.map((name, index) => (
-          <Stepper.Step key={index} label={name} />
-        ))}
-      </Stepper>
+    <>
+      <Breadcrumbs style={{ width: "100%", marginTop: "10px" }}>
+        {items}
+        {studentId}
+      </Breadcrumbs>
+      <Button
+        style={{ marginTop: "10px" }}
+        onClick={() => navigate("/listall-student")}
+      >
+        Back to Student List
+      </Button>
+      <Container
+        size="xl"
+        style={{ width: "100%", marginTop: "50px", padding: "10px" }}
+      >
+        <Stepper active={active} breakpoint="sm" size="xs">
+          {stepNames.map((name, index) => (
+            <Stepper.Step key={index} label={name} />
+          ))}
+        </Stepper>
 
-      {active === 2 && (
-        <Card
-          shadow="sm"
-          padding="lg"
-          radius="md"
-          withBorder
-          style={{
-            width: "100%",
-            marginTop: "30px",
-            marginBottom: "30px",
-            background: "#e7d471",
-          }}
-        >
-          <Group>
-            <Checkbox
-              label="Include Father's Details"
-              checked={includeFather}
-              onChange={(e) => setIncludeFather(e.currentTarget.checked)}
-            />
-            <Checkbox
-              label="Include Mother's Details"
-              checked={includeMother}
-              onChange={(e) => setIncludeMother(e.currentTarget.checked)}
-            />
-            <Checkbox
-              label="Include Guardian's Details"
-              checked={includeGuardian}
-              onChange={(e) => setIncludeGuardian(e.currentTarget.checked)}
-            />
-          </Group>
-        </Card>
-      )}
-
-      <form onSubmit={formik.handleSubmit}>
-        <Card
-          shadow="sm"
-          padding="lg"
-          radius="md"
-          withBorder
-          style={{ width: "100%", marginTop: "30px", padding: "10px", background:'#f0f0f0' }}
-        >
-          {active !== 0 && (
-            <TextInput
-              label={"Student ID / SIN No."}
-              value={formik.values["studentId"]}
-              disabled
-              readOnly
-              style={{ width: "180px", margin: "10px" }}
-              type={"text"}
-            />
-          )}
-          <Grid>{renderFields()}</Grid>
-        </Card>
-        <Group position="right" mt="md">
-          <Button
-            type="button"
-            onClick={handlePreviousStep}
-            disabled={active === 0}
+        {active === 1 && (
+          <Card
+            shadow="sm"
+            padding="lg"
+            radius="md"
+            withBorder
+            style={{
+              width: "100%",
+              marginTop: "30px",
+              marginBottom: "30px",
+              background: "#e7d471",
+            }}
           >
-            Previous
-          </Button>
-          {active < steps - 1 ? (
-            <>
-              {active === 2 &&
-              !(includeFather || includeMother || includeGuardian) ? (
-                <Button
+            <Group>
+              <Checkbox
+                label="Include Father's Details"
+                checked={includeFather}
+                onChange={(e) => setIncludeFather(e.currentTarget.checked)}
+              />
+              <Checkbox
+                label="Include Mother's Details"
+                checked={includeMother}
+                onChange={(e) => setIncludeMother(e.currentTarget.checked)}
+              />
+              <Checkbox
+                label="Include Guardian's Details"
+                checked={includeGuardian}
+                onChange={(e) => setIncludeGuardian(e.currentTarget.checked)}
+              />
+            </Group>
+          </Card>
+        )}
+
+        <form onSubmit={formik.handleSubmit}>
+          <Card
+            shadow="sm"
+            padding="lg"
+            radius="md"
+            withBorder
+            style={{ width: "100%", marginTop: "30px", padding: "10px" }}
+          >
+            <Grid>{renderFields()}</Grid>
+          </Card>
+          <Group position="right" mt="md">
+          <Button
                   type="button"
-                  disabled
-                  // onClick={handleNextStep}
+                  onClick={handlePreviousStep}
+                  disabled={active === 0}
                 >
-                  Next
+                  Previous
                 </Button>
-              ) : active === 0 ? (
-                <Button
-                  type="button"
-                  loading={searchloading}
-                  onClick={handleSearch}
-                >
-                  Search
-                </Button>
-              ) : (
-                <Button type="button" onClick={handleNextStep}>
-                  Next
-                </Button>
-              )}
-            </>
-          ) : (
-            <Button type="submit" color="green" loading={false}>
-              Submit
-            </Button>
-          )}
-        </Group>
-      </form>
-    </Container>
+            {active < steps - 1 ? (
+              <>
+                
+                {active === 1 &&
+                !(includeFather || includeMother || includeGuardian) ? (
+                  <Button
+                    type="button"
+                    disabled
+                    // onClick={handleNextStep}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button type="button" onClick={handleNextStep}>
+                    Next
+                  </Button>
+                )}
+              </>
+            ) : (
+              <Button type="submit" loading={false}>
+                Update
+              </Button>
+            )}
+          </Group>
+        </form>
+      </Container>
+    </>
   );
 };
 
-export default MultiStepForm;
+export default EditingStudent;

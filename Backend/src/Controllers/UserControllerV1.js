@@ -16,6 +16,12 @@ const ejs = require("ejs");
 const exports = {
   Register: async (req, res) => {
     try {
+      if (!req.body || !req.body.username || !req.body.roles) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Details are Required" });
+      }
+     
       const count = await UsersModel.count({
         where: {
           [Op.or]: [{ mobile: req.body.mobile }],
@@ -25,7 +31,7 @@ const exports = {
       if (count > 0) {
         return res
           .status(400)
-          .json({ success: false, message: "Mobile  already exists." });
+          .json({ success: false, message: "Mobile already exists." });
       }
 
       const saltHash = genPassword(req.body.password);
@@ -39,6 +45,7 @@ const exports = {
         pwd_salt: passwordSalt,
         pwd_hash: passwordHash,
         is_active: req.body.isActive,
+        roles:req.body.roles,
       });
 
       if (newUser) {
@@ -247,6 +254,163 @@ const exports = {
     }
   },
 
+  updatestudent: async (req, res) => {
+    try {
+      const userDetails = req.headers["userdetails"];
+  
+      const userrole = req.headers["userrole"];
+    
+      if (userrole !== '"ADMIN"') {
+        return res
+          .status(400)
+          .json({ success: false, message: "Only Admin can able to update ID" });
+      }
+      if (!req.body || !req.body.firstName || !req.body.studentId) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Details are Required" });
+      }
+     
+      const updateStudent = await StudentModel.update({
+        sevenFiveSCH: req.body["75sch"] || null,
+        firstName: req.body.firstName || null,
+        surname: req.body.surname || null,
+        fullname: req.body.fullname || null,
+        gender: req.body.gender || null,
+        dateOfBirth: req.body.dateOfBirth || null,
+        userId: req.body.userId || null,
+        email: req.body.email || null,
+        mobileNumber: req.body.mobileNumber || null,
+        address: req.body.address || null,
+        area: req.body.area || null,
+        state: req.body.state || null,
+        district: req.body.district || null,
+        talukaCity: req.body.talukaCity || null,
+        townVillage: req.body.townVillage || null,
+        pincode: req.body.pincode || null,
+        religion: req.body.religion || null,
+        dept: req.body.dept || null,
+        batch: req.body.batch || null,
+        college: req.body.college || null,
+        studentId: req.body.studentId || null,
+        fg: req.body.fg || null,
+        postMatric: req.body.postMatric || null,
+        fatherId: req.body.fatherId || null,
+        fatherFirstName: req.body.fatherFirstName || null,
+        fatherDateOfBirth: req.body.fatherDateOfBirth || null,
+        fatherEmail: req.body.fatherEmail || null,
+        fatherPrimaryMobileNo: req.body.fatherPrimaryMobileNo || null,
+        fatherSecondaryMobileNo: req.body.fatherSecondaryMobileNo || null,
+        fatherAddressLine1: req.body.fatherAddressLine1 || null,
+        fatherArea: req.body.fatherArea || null,
+        fatherTownVillage: req.body.fatherTownVillage || null,
+        fatherPincode: req.body.fatherPincode || null,
+        fatherProfession: req.body.fatherProfession || null,
+        fatherIncome: req.body.fatherIncome || null,
+        motherId: req.body.motherId || null,
+        motherFirstName: req.body.motherFirstName || null,
+        motherDateOfBirth: req.body.motherDateOfBirth || null,
+        motherEmail: req.body.motherEmail || null,
+        motherPrimaryMobileNo: req.body.motherPrimaryMobileNo || null,
+        motherSecondaryMobileNo: req.body.motherSecondaryMobileNo || null,
+        motherAddressLine1: req.body.motherAddressLine1 || null,
+        motherArea: req.body.motherArea || null,
+        motherTownVillage: req.body.motherTownVillage || null,
+        motherPincode: req.body.motherPincode || null,
+        motherProfession: req.body.motherProfession || null,
+        motherIncome: req.body.motherIncome || null,
+        guardianId: req.body.guardianId || null,
+        guardianFirstName: req.body.guardianFirstName || null,
+        guardianGender: req.body.guardianGender || null,
+        guardianDateOfBirth: req.body.guardianDateOfBirth || null,
+        guardianEmail: req.body.guardianEmail || null,
+        guardianPrimaryMobileNo: req.body.guardianPrimaryMobileNo || null,
+        guardianSecondaryMobileNo: req.body.guardianSecondaryMobileNo || null,
+        guardianAddressLine1: req.body.guardianAddressLine1 || null,
+        guardianArea: req.body.guardianArea || null,
+        guardianTownVillage: req.body.guardianTownVillage || null,
+        guardianPincode: req.body.guardianPincode || null,
+        guardianRelationWithStudent:
+          req.body.guardianRelationWithStudent || null,
+        guardianProfession: req.body.guardianProfession || null,
+        guardianIncome: req.body.guardianIncome || null,
+        bloodGroup: req.body.bloodGroup || null,
+        schoolType: req.body.schoolType || null,
+        schoolName: req.body.schoolName || null,
+        medium: req.body.medium || null,
+        languagesKnown: req.body.languagesKnown || null,
+        foreignLanguagesKnown: req.body.foreignLanguagesKnown || null,
+        aadharNo: req.body.aadharNo || null,
+        emisNo: req.body.emisNo || null,
+        tenthMark: req.body.tenthMark || null,
+        twelfthMarkPercent: req.body.twelfthMarkPercent || null,
+        twelfthMathsMarkOutOf100: req.body.twelfthMathsMarkOutOf100 || null,
+        twelfthPhysicsMarkOutOf100: req.body.twelfthPhysicsMarkOutOf100 || null,
+        twelfthChemistryMarkOutOf100:
+          req.body.twelfthChemistryMarkOutOf100 || null,
+        twelfthBilologyMarkOutOf100:
+          req.body.twelfthBilologyMarkOutOf100 || null,
+        twelfthBotanyMarkOutOf100: req.body.twelfthBotanyMarkOutOf100 || null,
+        twelfthZoologyMarkOutOf100: req.body.twelfthZoologyMarkOutOf100 || null,
+        twelfthCompScienceMarkOutOf100:
+          req.body.twelfthCompScienceMarkOutOf100 || null,
+        community: req.body.community || null,
+        panCard: req.body.panCard || null,
+        passportNumber: req.body.passportNumber || null,
+        hostelStudent: req.body.hostelStudent || null,
+        whatsappNumber: req.body.whatsappNumber || null,
+        visitorName: req.body.visitorName || null,
+        visitorRelation: req.body.visitorRelation || null,
+        visitorAadhar: req.body.visitorAadhar || null,
+        visitorPAN: req.body.visitorPAN || null,
+        visitorPhone: req.body.visitorPhone || null,
+        visitorDOB: req.body.visitorDOB || null,
+        visitorAddress: req.body.visitorAddress || null,
+        foodPreference: req.body.foodPreference || null,
+        bankDetails: req.body.bankDetails || null,
+        drivinglicense: req.body.drivinglicense || null,
+        registernumber: req.body.registernumber || null,
+        internship: req.body.internship || null,
+        placement: req.body.placement || null,
+        paidtraining: req.body.paidtraining || null,
+        gvtjobtraining: req.body.gvtjobtraining || null,
+        interestedtraining: req.body.interestedtraining || null,
+        hoursoftraining: req.body.hoursoftraining || null,
+        expectedsalary: req.body.expectedsalary || null,
+        preferedlocation: req.body.preferedlocation || null,
+        currentintern: req.body.currentintern || null,
+        currenttraining: req.body.currenttraining || null,
+        latestcgpa: req.body.latestcgpa || null,
+        noofstandingarrears: req.body.noofstandingarrears || null,
+        parttimejob: req.body.parttimejob || null,
+        primaryskills: req.body.primaryskills || null,
+        secondaryskills: req.body.secondaryskills || null,
+        primaryskills_others: req.body.primaryskills_others || null,
+        secondaryskills_others: req.body.secondaryskills_others || null,
+        noplacemnetreason: req.body.noplacemnetreason || null,
+        created_by: userDetails || null,
+        twelethpassoutyear: req.body.twelethpassoutyear || null,
+        tenthpassoutyear: req.body.tenthpassoutyear || null,
+      },
+      {
+        where: { studentId: req.body.studentId }, // Update where studentId matches
+      });
+
+      if (updateStudent) {
+        return res
+          .status(200)
+          .json({ success: true, message: "Student Updated successfully." });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while Updating the student.",
+        error: err,
+      });
+    }
+  },
+
   getstudent: async (req, res) => {
     try {
       const user = await UploadstudentsModel.findOne({
@@ -287,6 +451,36 @@ const exports = {
       });
     }
   },
+  getEditstudent: async (req, res) => {
+    try {
+
+
+
+
+      const user = await StudentModel.findOne({
+        where: { studentId: req.body.studentid },
+      });
+
+      if (!user) {
+        return res
+          .status(400)
+          .json({ success: false, msg: "Student ID not found" });
+      }
+
+
+      res.status(200).json({
+        success: true,
+        data: user,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        success: false,
+        message: "Error occurred while checking the Student ID",
+        error: err,
+      });
+    }
+  },
   getallstudent: async (req, res) => {
     try {
       const user = await StudentModel.findAll();
@@ -297,7 +491,7 @@ const exports = {
           .json({ success: false, msg: "Student ID not found" });
       }
 
-  
+
       res.status(200).json({
         success: true,
         data: user,
@@ -316,7 +510,7 @@ const exports = {
     try {
       const userDetails = req.headers["userdetails"];
       const userrole = req.headers["userrole"];
-      console.log('userrole', userrole)
+    
       if (userrole !== '"ADMIN"') {
         return res
           .status(400)
