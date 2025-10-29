@@ -73,6 +73,7 @@ export const fieldDefinitions = [
         "BIO MED/LE",
         "AGRI/LE",
         "CYBER SECURITY/LE",
+        "SIMSR",
       ],
       optional: false,
       placeholder: "Enter Department",
